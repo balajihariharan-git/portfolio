@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getMemoryBySlug, getAllMemoryEntries } from "@/lib/memory";
 import { MemoryContent } from "@/components/memory/memory-content";
+import { SignOutButton } from "@/components/memory/sign-out-button";
 import { ArrowLeft, Calendar, Tag } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -32,13 +33,16 @@ export default async function MemoryEntryPage({ params }: PageProps) {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
-      <Link
-        href="/memory"
-        className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Back to Memory
-      </Link>
+      <div className="mb-8 flex items-center justify-between">
+        <Link
+          href="/memory"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Memory
+        </Link>
+        <SignOutButton />
+      </div>
 
       <header className="mb-8">
         <h1 className="mb-3 text-3xl font-bold tracking-tight text-foreground">
