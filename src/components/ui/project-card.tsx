@@ -18,15 +18,15 @@ export function ProjectCard({ project }: ProjectCardProps) {
       )}
     >
       {/* Header */}
-      <div className="mb-3 flex items-start justify-between gap-3">
+      <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
         <h3 className="text-lg font-semibold text-card-foreground">
           {project.name}
         </h3>
-        <div className="flex shrink-0 items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1">
+        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1">
           <span className="text-sm font-bold text-primary">
             {project.metric}
           </span>
-          <span className="text-xs text-muted-foreground">
+          <span className="whitespace-nowrap text-xs text-muted-foreground">
             {project.metricLabel}
           </span>
         </div>
