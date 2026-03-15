@@ -1,0 +1,63 @@
+---
+title: "How I Built an MCP Server from Scratch"
+slug: "building-mcp-server-from-scratch"
+description: "A deep dive into building @shackleai/memory-mcp — a persistent memory server for AI coding tools with 1,440+ weekly npm downloads."
+publishedAt: "2026-03-20"
+updatedAt: "2026-03-20"
+category: "mcp-protocol"
+tags: ["MCP", "TypeScript", "AI Agents", "Open Source"]
+featured: true
+---
+
+The Model Context Protocol (MCP) is quickly becoming the standard for how AI coding tools interact with external systems. When I started building ShackleAI, I needed persistent memory across coding sessions — something that didn't exist yet.
+
+So I built it from scratch.
+
+## Why Build an MCP Memory Server?
+
+AI coding assistants like Claude Code, Cursor, and Windsurf are powerful, but they forget everything between sessions. Every new conversation starts from zero. You re-explain your architecture, your conventions, your decisions — over and over.
+
+I wanted a memory layer that:
+- Persists across sessions automatically
+- Searches semantically, not just by keyword
+- Runs locally with zero cloud dependencies
+- Works with any MCP-compatible tool
+
+## The Architecture
+
+The server is built on three pillars:
+
+**1. SQLite + sqlite-vec for storage**
+
+I chose SQLite over PostgreSQL for a critical reason: zero infrastructure. Developers shouldn't need to run a database server just to have memory in their coding tool. sqlite-vec provides vector search capabilities directly in SQLite.
+
+**2. Transformers.js for offline embeddings**
+
+All embeddings are generated locally using the all-MiniLM-L6-v2 model via Transformers.js. No API keys, no network calls, no cost per query. Your data never leaves your machine.
+
+**3. MCP Protocol for integration**
+
+The server exposes 11 MCP tools that AI assistants can call: memory_store, memory_search, memory_update, memory_delete, and more. Any MCP-compatible client works out of the box.
+
+## What I Learned
+
+Building a developer tool that's used by hundreds of developers weekly taught me several things:
+
+**Ship small, iterate fast.** The first version had 3 tools. Now it has 11. Each addition came from real user feedback.
+
+**Zero-config is non-negotiable.** If your tool requires setup steps, most developers won't use it. memory-mcp works with a single npx command.
+
+**Semantic search changes everything.** Keyword search misses context. When a developer asks "how does auth work in this project?", semantic search finds the memory about JWT middleware even though the word "auth" isn't in it.
+
+## Results
+
+- 1,440+ weekly npm downloads
+- Used by developers with Claude Code, Cursor, and Windsurf
+- Zero-config, zero-cost, fully offline
+- 11 MCP tools for complete memory management
+
+## What's Next
+
+I'm exploring cross-project memory (sharing context between related repos), team memory (shared knowledge bases for engineering teams), and deeper IDE integrations.
+
+If you're building MCP servers or agent tools, I'd love to hear what you're working on.
