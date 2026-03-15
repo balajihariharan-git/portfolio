@@ -3,6 +3,7 @@ import { ArrowLeft, Calendar, Clock, Tag } from "lucide-react";
 import { PostContent } from "./post-content";
 import { CtaEnd } from "./cta-end";
 import { RelatedPosts } from "./related-posts";
+import { SocialShare } from "@/components/admin/social-share";
 import type { Post, PostMeta } from "@/lib/mdx";
 
 interface PostLayoutProps {
@@ -69,9 +70,40 @@ export function PostLayout({ post, relatedPosts }: PostLayoutProps) {
             ))}
           </div>
         )}
+
+        {/* Social share */}
+        <div className="mt-6">
+          <SocialShare
+            url={`/post/${post.slug}`}
+            title={post.title}
+            description={post.description}
+          />
+        </div>
       </header>
 
+      {/* Featured image */}
+      {post.featuredImage && (
+        <div className="mb-10 overflow-hidden rounded-xl border border-border">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`/api/uploads/${post.featuredImage}`}
+            alt={post.title}
+            className="w-full object-cover"
+          />
+        </div>
+      )}
+
       <PostContent content={post.content} />
+
+      {/* Bottom share */}
+      <div className="my-8 rounded-xl border border-border bg-card p-4">
+        <p className="mb-3 text-sm font-medium text-foreground">Share this post</p>
+        <SocialShare
+          url={`/post/${post.slug}`}
+          title={post.title}
+          description={post.description}
+        />
+      </div>
 
       <CtaEnd category={post.category} />
 

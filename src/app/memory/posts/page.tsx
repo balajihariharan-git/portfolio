@@ -1,16 +1,19 @@
 import { getAllPosts } from "@/lib/mdx";
 import { SignOutButton } from "@/components/memory/sign-out-button";
-import { ArrowLeft, Calendar, Clock, Eye, ExternalLink, Tag } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, Eye, Pencil, Tag, Plus } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { DeletePostButton } from "@/components/admin/delete-post-button";
 
 export const metadata: Metadata = {
   title: "Manage Posts",
   robots: { index: false, follow: false },
 };
 
-export default function ManagePostsPage() {
-  const posts = getAllPosts();
+export const dynamic = "force-dynamic";
+
+export default async function ManagePostsPage() {
+  const posts = await getAllPosts();
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
@@ -32,18 +35,16 @@ export default function ManagePostsPage() {
             </p>
           </div>
         </div>
-        <SignOutButton />
-      </div>
-
-      {/* How to add posts */}
-      <div className="mb-8 rounded-xl border border-primary/20 bg-primary/5 p-5">
-        <h3 className="mb-2 text-sm font-semibold text-foreground">How to publish a new post</h3>
-        <ol className="space-y-1 text-sm text-muted-foreground">
-          <li>1. Create a <code className="rounded bg-[var(--code-bg)] px-1.5 py-0.5 font-mono text-xs">.mdx</code> file in <code className="rounded bg-[var(--code-bg)] px-1.5 py-0.5 font-mono text-xs">content/post/</code></li>
-          <li>2. Add frontmatter (title, slug, description, publishedAt, category, tags)</li>
-          <li>3. Write your article in markdown</li>
-          <li>4. <code className="rounded bg-[var(--code-bg)] px-1.5 py-0.5 font-mono text-xs">git add . && git commit && git push</code> — auto-deploys via GitHub Actions</li>
-        </ol>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/memory/posts/new"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            <Plus className="h-4 w-4" />
+            New Post
+          </Link>
+          <SignOutButton />
+        </div>
       </div>
 
       {/* Posts list */}
@@ -108,17 +109,16 @@ export default function ManagePostsPage() {
                   className="inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-primary/80"
                 >
                   <Eye className="h-3.5 w-3.5" />
-                  View Live
+                  View
                 </Link>
-                <a
-                  href={`https://github.com/balajihariharan-git/portfolio/blob/main/content/post/${post.slug}.mdx`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href={`/memory/posts/edit/${post.id}`}
                   className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  <ExternalLink className="h-3.5 w-3.5" />
-                  Edit on GitHub
-                </a>
+                  <Pencil className="h-3.5 w-3.5" />
+                  Edit
+                </Link>
+                <DeletePostButton postId={post.id} postTitle={post.title} />
               </div>
             </div>
           ))}

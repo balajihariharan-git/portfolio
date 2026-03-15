@@ -3,8 +3,9 @@ import { ArrowRight } from "lucide-react";
 import { getAllPosts } from "@/lib/mdx";
 import { PostCard } from "@/components/blog/post-card";
 
-export function LatestPosts() {
-  const posts = getAllPosts().slice(0, 3);
+export async function LatestPosts() {
+  const allPosts = await getAllPosts();
+  const posts = allPosts.slice(0, 3);
 
   if (posts.length === 0) return null;
 

@@ -2,7 +2,7 @@ import { getAllMemoryEntries, getMemoryCategories } from "@/lib/memory";
 import { getAllPosts } from "@/lib/mdx";
 import { MemoryList } from "@/components/memory/memory-list";
 import { SignOutButton } from "@/components/memory/sign-out-button";
-import { FileText, Brain } from "lucide-react";
+import { FileText, Brain, Plus } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -11,10 +11,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function MemoryPage() {
-  const entries = getAllMemoryEntries();
-  const categories = getMemoryCategories();
-  const posts = getAllPosts();
+export const dynamic = "force-dynamic";
+
+export default async function MemoryPage() {
+  const entries = await getAllMemoryEntries();
+  const categories = await getMemoryCategories();
+  const posts = await getAllPosts();
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
@@ -28,7 +30,16 @@ export default function MemoryPage() {
             Your private knowledge base
           </p>
         </div>
-        <SignOutButton />
+        <div className="flex items-center gap-3">
+          <Link
+            href="/memory/new"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            <Plus className="h-4 w-4" />
+            New Entry
+          </Link>
+          <SignOutButton />
+        </div>
       </div>
 
       {/* Quick stats */}

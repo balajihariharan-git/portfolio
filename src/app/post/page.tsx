@@ -12,9 +12,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PostsPage() {
-  const posts = getAllPosts();
-  const categories = getPostCategories();
+export const dynamic = "force-dynamic";
+
+export default async function PostsPage() {
+  const posts = await getAllPosts();
+  const categories = await getPostCategories();
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">

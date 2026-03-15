@@ -1,10 +1,9 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-
-const MEMORY_DIR = path.join(process.cwd(), "content", "memory");
+import { db } from "@/lib/db";
+import { memoryEntries } from "@/lib/db/schema";
+import { eq, desc } from "drizzle-orm";
 
 export interface MemoryEntry {
+  id: string;
   slug: string;
   title: string;
   category: string;
@@ -12,59 +11,45 @@ export interface MemoryEntry {
   updatedAt: string;
   tags: string[];
   content: string;
+  attachments: Array<{ name: string; path: string; size: number; type: string }>;
 }
 
-export function getAllMemoryEntries(): MemoryEntry[] {
-  if (!fs.existsSync(MEMORY_DIR)) return [];
-
-  const files = fs
-    .readdirSync(MEMORY_DIR)
-    .filter((f) => f.endsWith(".mdx") || f.endsWith(".md"));
-
-  return files
-    .map((filename) => {
-      const filePath = path.join(MEMORY_DIR, filename);
-      const fileContent = fs.readFileSync(filePath, "utf-8");
-      const { data, content } = matter(fileContent);
-
-      return {
-        slug: filename.replace(/\.mdx?$/, ""),
-        title: (data.title as string) || filename,
-        category: (data.category as string) || "uncategorized",
-        createdAt: (data.createdAt as string) || "",
-        updatedAt: (data.updatedAt as string) || "",
-        tags: (data.tags as string[]) || [],
-        content,
-      };
-    })
-    .sort((a, b) => (b.createdAt > a.createdAt ? 1 : -1));
+function toEntry(row: typeof memoryEntries.$inferSelect): MemoryEntry {
+  return {
+    id: row.id,
+    slug: row.slug,
+    title: row.title,
+    category: row.category,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+    tags: row.tags || [],
+    content: row.content,
+    attachments: (row.attachments as MemoryEntry["attachments"]) || [],
+  };
 }
 
-export function getMemoryBySlug(slug: string): MemoryEntry | null {
-  const extensions = [".mdx", ".md"];
+export async function getAllMemoryEntries(): Promise<MemoryEntry[]> {
+  const rows = await db
+    .select()
+    .from(memoryEntries)
+    .orderBy(desc(memoryEntries.createdAt));
 
-  for (const ext of extensions) {
-    const filePath = path.join(MEMORY_DIR, `${slug}${ext}`);
-    if (fs.existsSync(filePath)) {
-      const fileContent = fs.readFileSync(filePath, "utf-8");
-      const { data, content } = matter(fileContent);
-
-      return {
-        slug,
-        title: (data.title as string) || slug,
-        category: (data.category as string) || "uncategorized",
-        createdAt: (data.createdAt as string) || "",
-        updatedAt: (data.updatedAt as string) || "",
-        tags: (data.tags as string[]) || [],
-        content,
-      };
-    }
-  }
-
-  return null;
+  return rows.map(toEntry);
 }
 
-export function getMemoryCategories(): string[] {
-  const entries = getAllMemoryEntries();
-  return [...new Set(entries.map((e) => e.category))].sort();
+export async function getMemoryBySlug(slug: string): Promise<MemoryEntry | null> {
+  const [row] = await db
+    .select()
+    .from(memoryEntries)
+    .where(eq(memoryEntries.slug, slug));
+
+  return row ? toEntry(row) : null;
+}
+
+export async function getMemoryCategories(): Promise<string[]> {
+  const rows = await db
+    .select({ category: memoryEntries.category })
+    .from(memoryEntries);
+
+  return [...new Set(rows.map((r) => r.category))].sort();
 }

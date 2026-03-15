@@ -2,9 +2,14 @@ import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
 export default auth((req) => {
-  const isMemoryRoute = req.nextUrl.pathname.startsWith("/memory");
+  const path = req.nextUrl.pathname;
+  const isProtected =
+    path.startsWith("/memory") || path.startsWith("/api/admin");
 
-  if (isMemoryRoute && !req.auth) {
+  if (isProtected && !req.auth) {
+    if (path.startsWith("/api/")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const signInUrl = new URL("/api/auth/signin", req.url);
     signInUrl.searchParams.set("callbackUrl", req.url);
     return NextResponse.redirect(signInUrl);
@@ -14,5 +19,5 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/memory/:path*"],
+  matcher: ["/memory/:path*", "/api/admin/:path*"],
 };

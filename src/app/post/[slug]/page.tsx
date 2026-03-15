@@ -7,9 +7,11 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
 
   if (!post) return { title: "Post Not Found" };
 
@@ -25,11 +27,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       authors: ["Balaji Hariharan"],
       tags: post.tags,
       url: `https://balajihariharan.com/post/${post.slug}`,
+      ...(post.featuredImage && {
+        images: [{ url: `https://balajihariharan.com/api/uploads/${post.featuredImage}` }],
+      }),
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
+      ...(post.featuredImage && {
+        images: [`https://balajihariharan.com/api/uploads/${post.featuredImage}`],
+      }),
     },
     alternates: {
       canonical: `/post/${post.slug}`,
@@ -37,17 +45,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export function generateStaticParams() {
-  return getAllPosts().map((post) => ({ slug: post.slug }));
-}
-
 export default async function PostPage({ params }: PageProps) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
 
   if (!post) notFound();
 
-  const relatedPosts = getRelatedPosts(post.slug, post.category);
+  const relatedPosts = await getRelatedPosts(post.slug, post.category);
 
   // JSON-LD for BlogPosting
   const jsonLd = {
@@ -57,6 +61,9 @@ export default async function PostPage({ params }: PageProps) {
     description: post.description,
     datePublished: post.publishedAt,
     dateModified: post.updatedAt,
+    ...(post.featuredImage && {
+      image: `https://balajihariharan.com/api/uploads/${post.featuredImage}`,
+    }),
     author: {
       "@type": "Person",
       "@id": "https://balajihariharan.com/#person",

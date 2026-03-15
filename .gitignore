@@ -45,3 +45,6 @@ next-env.d.ts
 content/memory/*.mdx
 content/memory/*.md
 !content/memory/.gitkeep
+
+# Uploads (stored on VPS disk, not in git)
+/uploads

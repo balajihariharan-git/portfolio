@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search, Tag, Calendar, FolderOpen } from "lucide-react";
+import { Search, Tag, Calendar, FolderOpen, Pencil } from "lucide-react";
 import Link from "next/link";
+import { DeleteMemoryButton } from "@/components/admin/delete-memory-button";
 import type { MemoryEntry } from "@/lib/memory";
 
 interface MemoryListProps {
@@ -79,39 +80,53 @@ export function MemoryList({ entries, categories }: MemoryListProps) {
           <FolderOpen className="mx-auto mb-3 h-8 w-8 text-muted-foreground" />
           <p className="text-muted-foreground">
             {entries.length === 0
-              ? "No memory entries yet. Add .mdx files to content/memory/"
+              ? "No memory entries yet."
               : "No entries match your search."}
           </p>
         </div>
       ) : (
         <div className="space-y-3">
           {filtered.map((entry) => (
-            <Link
+            <div
               key={entry.slug}
-              href={`/memory/${entry.slug}`}
-              className="group block rounded-xl border border-border bg-card p-5 transition-all hover:border-primary/30 hover:shadow-md"
+              className="group rounded-xl border border-border bg-card p-5 transition-all hover:border-primary/30 hover:shadow-md"
             >
-              <div className="mb-2 flex items-start justify-between gap-3">
-                <h2 className="text-lg font-semibold text-card-foreground transition-colors group-hover:text-primary">
-                  {entry.title}
-                </h2>
-                <span className="shrink-0 rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
-                  {entry.category}
-                </span>
-              </div>
-              <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
-                <span className="flex items-center gap-1">
-                  <Calendar className="h-3 w-3" />
-                  {entry.createdAt}
-                </span>
-                {entry.tags.length > 0 && (
-                  <span className="flex items-center gap-1">
-                    <Tag className="h-3 w-3" />
-                    {entry.tags.join(", ")}
+              <Link href={`/memory/${entry.slug}`} className="block">
+                <div className="mb-2 flex items-start justify-between gap-3">
+                  <h2 className="text-lg font-semibold text-card-foreground transition-colors group-hover:text-primary">
+                    {entry.title}
+                  </h2>
+                  <span className="shrink-0 rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+                    {entry.category}
                   </span>
-                )}
+                </div>
+                <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1">
+                    <Calendar className="h-3 w-3" />
+                    {new Date(entry.createdAt).toLocaleDateString()}
+                  </span>
+                  {entry.tags.length > 0 && (
+                    <span className="flex items-center gap-1">
+                      <Tag className="h-3 w-3" />
+                      {entry.tags.join(", ")}
+                    </span>
+                  )}
+                </div>
+              </Link>
+              <div className="mt-3 flex items-center gap-3 border-t border-border pt-3">
+                <Link
+                  href={`/memory/edit/${entry.id}`}
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <Pencil className="h-3.5 w-3.5" />
+                  Edit
+                </Link>
+                <DeleteMemoryButton
+                  entryId={entry.id}
+                  entryTitle={entry.title}
+                />
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       )}

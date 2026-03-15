@@ -2,8 +2,10 @@ import { getAllPosts } from "@/lib/mdx";
 
 const SITE_URL = "https://balajihariharan.com";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
 
   const rssItems = posts
     .map(

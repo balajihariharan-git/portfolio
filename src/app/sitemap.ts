@@ -3,8 +3,10 @@ import { getAllPosts } from "@/lib/mdx";
 
 const BASE_URL = "https://balajihariharan.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const posts = getAllPosts();
+export const dynamic = "force-dynamic";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await getAllPosts();
 
   const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${BASE_URL}/post/${post.slug}`,

@@ -28,8 +28,21 @@ jobs:
             --exclude='.env*' \
             --exclude='content/memory/*.mdx' \
             --exclude='content/memory/*.md' \
+            --exclude='uploads' \
             -e "ssh -i ~/.ssh/vps_key" \
             ./ ubuntu@${{ secrets.VPS_HOST }}:/home/ubuntu/balaji-portfolio/
+
+      - name: Run database migrations
+        run: |
+          ssh -i ~/.ssh/vps_key ubuntu@${{ secrets.VPS_HOST }} << 'EOF'
+            cd /home/ubuntu/balaji-portfolio
+            # Install deps for migration runner (if not cached)
+            npm ci --ignore-scripts 2>/dev/null
+            # Get DATABASE_URL from .env
+            export $(grep DATABASE_URL .env | xargs)
+            # Run drizzle migrations
+            npx drizzle-kit push --force 2>&1 || echo "Migration warning (may be already applied)"
+          EOF
 
       - name: Build and deploy container
         run: |

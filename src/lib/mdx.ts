@@ -1,11 +1,10 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+import { db } from "@/lib/db";
+import { posts } from "@/lib/db/schema";
+import { eq, desc, and, ne } from "drizzle-orm";
 import readingTime from "reading-time";
 
-const POSTS_DIR = path.join(process.cwd(), "content", "post");
-
 export interface PostMeta {
+  id: string;
   slug: string;
   title: string;
   description: string;
@@ -14,82 +13,94 @@ export interface PostMeta {
   category: string;
   tags: string[];
   featured: boolean;
+  featuredImage: string | null;
   readingTime: string;
 }
 
 export interface Post extends PostMeta {
   content: string;
+  published: boolean;
 }
 
-export function getAllPosts(): PostMeta[] {
-  if (!fs.existsSync(POSTS_DIR)) return [];
-
-  const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith(".mdx") || f.endsWith(".md"));
-
-  return files
-    .map((filename) => {
-      const filePath = path.join(POSTS_DIR, filename);
-      const fileContent = fs.readFileSync(filePath, "utf-8");
-      const { data, content } = matter(fileContent);
-      const stats = readingTime(content);
-
-      return {
-        slug: data.slug || filename.replace(/\.mdx?$/, ""),
-        title: data.title || filename,
-        description: data.description || "",
-        publishedAt: data.publishedAt || "",
-        updatedAt: data.updatedAt || data.publishedAt || "",
-        category: data.category || "uncategorized",
-        tags: data.tags || [],
-        featured: data.featured || false,
-        readingTime: stats.text,
-      };
-    })
-    .filter((post) => post.publishedAt) // Only published posts
-    .sort((a, b) => (b.publishedAt > a.publishedAt ? 1 : -1));
+function toPostMeta(row: typeof posts.$inferSelect): PostMeta {
+  return {
+    id: row.id,
+    slug: row.slug,
+    title: row.title,
+    description: row.description,
+    publishedAt: row.publishedAt?.toISOString() || "",
+    updatedAt: row.updatedAt.toISOString(),
+    category: row.category,
+    tags: row.tags || [],
+    featured: row.featured,
+    featuredImage: row.featuredImage,
+    readingTime: readingTime(row.content).text,
+  };
 }
 
-export function getPostBySlug(slug: string): Post | null {
-  if (!fs.existsSync(POSTS_DIR)) return null;
-
-  const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith(".mdx") || f.endsWith(".md"));
-
-  for (const filename of files) {
-    const filePath = path.join(POSTS_DIR, filename);
-    const fileContent = fs.readFileSync(filePath, "utf-8");
-    const { data, content } = matter(fileContent);
-    const fileSlug = data.slug || filename.replace(/\.mdx?$/, "");
-
-    if (fileSlug === slug) {
-      const stats = readingTime(content);
-      return {
-        slug: fileSlug,
-        title: data.title || filename,
-        description: data.description || "",
-        publishedAt: data.publishedAt || "",
-        updatedAt: data.updatedAt || data.publishedAt || "",
-        category: data.category || "uncategorized",
-        tags: data.tags || [],
-        featured: data.featured || false,
-        readingTime: stats.text,
-        content,
-      };
-    }
-  }
-
-  return null;
+function toPost(row: typeof posts.$inferSelect): Post {
+  return {
+    ...toPostMeta(row),
+    content: row.content,
+    published: row.published,
+  };
 }
 
-export function getPostsByCategory(category: string): PostMeta[] {
-  return getAllPosts().filter((p) => p.category === category);
+export async function getAllPosts(): Promise<PostMeta[]> {
+  const rows = await db
+    .select()
+    .from(posts)
+    .where(eq(posts.published, true))
+    .orderBy(desc(posts.publishedAt));
+
+  return rows.map(toPostMeta);
 }
 
-export function getRelatedPosts(currentSlug: string, category: string, limit = 3): PostMeta[] {
-  return getAllPosts()
-    .filter((p) => p.slug !== currentSlug && p.category === category)
-    .slice(0, limit);
+export async function getPostBySlug(slug: string): Promise<Post | null> {
+  const [row] = await db
+    .select()
+    .from(posts)
+    .where(and(eq(posts.slug, slug), eq(posts.published, true)));
+
+  return row ? toPost(row) : null;
 }
 
-export function getPostCategories(): string[] {
-  return [...new Set(getAllPosts().map((p) => p.category))].sort();
+export async function getPostsByCategory(category: string): Promise<PostMeta[]> {
+  const rows = await db
+    .select()
+    .from(posts)
+    .where(and(eq(posts.published, true), eq(posts.category, category)))
+    .orderBy(desc(posts.publishedAt));
+
+  return rows.map(toPostMeta);
+}
+
+export async function getRelatedPosts(
+  currentSlug: string,
+  category: string,
+  limit = 3
+): Promise<PostMeta[]> {
+  const rows = await db
+    .select()
+    .from(posts)
+    .where(
+      and(
+        eq(posts.published, true),
+        eq(posts.category, category),
+        ne(posts.slug, currentSlug)
+      )
+    )
+    .orderBy(desc(posts.publishedAt))
+    .limit(limit);
+
+  return rows.map(toPostMeta);
+}
+
+export async function getPostCategories(): Promise<string[]> {
+  const rows = await db
+    .select({ category: posts.category })
+    .from(posts)
+    .where(eq(posts.published, true));
+
+  return [...new Set(rows.map((r) => r.category))].sort();
 }
