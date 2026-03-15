@@ -27,7 +27,7 @@ const LINKS = [
   },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/balajihariharan",
+    href: "https://www.linkedin.com/in/ibalajihariharan",
     icon: Linkedin,
     desc: "Professional network",
     color: "bg-blue-500/10 text-blue-400" as const,

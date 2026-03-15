@@ -59,12 +59,12 @@ export default function TerminalDemo() {
       </div>
 
       {/* Content */}
-      <div className="overflow-x-auto p-4 font-mono text-xs leading-relaxed sm:text-sm">
+      <div className="overflow-hidden p-4 font-mono text-xs leading-relaxed sm:text-sm">
         {LINES.slice(0, visibleLines).map((line, i) => (
           <div
             key={i}
             className={cn(
-              "whitespace-pre",
+              "whitespace-pre-wrap",
               line.type === "command" && "text-primary font-semibold",
               line.type === "output" && "text-[var(--code-text)]",
               line.type === "success" && "text-[var(--success)]",
