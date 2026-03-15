@@ -17,10 +17,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
   },
-  pages: {
-    signIn: "/api/auth/signin",
-    error: "/api/auth/error",
-  },
   session: { strategy: "jwt" },
   trustHost: true,
 });
