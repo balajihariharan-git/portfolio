@@ -4,6 +4,7 @@ import { Background } from "@/components/sections/background";
 import { Projects } from "@/components/sections/projects";
 import { Skills } from "@/components/sections/skills";
 import { WorkWithMe } from "@/components/sections/work-with-me";
+import { LatestPosts } from "@/components/sections/latest-posts";
 import { OpenSource } from "@/components/sections/open-source";
 import { Timeline } from "@/components/sections/timeline";
 import { Contact } from "@/components/sections/contact";
@@ -17,6 +18,7 @@ export default function Home() {
       <Projects />
       <Skills />
       <WorkWithMe />
+      <LatestPosts />
       <OpenSource />
       <Timeline />
       <Contact />

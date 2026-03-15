@@ -21,7 +21,6 @@ export const metadata: Metadata = {
   description:
     "AI Solutions Architect, LLM Infrastructure Engineer, and Founder of ShackleAI. I design and build production multi-agent systems, LLM gateways, and governance frameworks. Available for enterprise consulting, freelance AI projects, and technical training.",
   metadataBase: new URL("https://balajihariharan.com"),
-  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: "Balaji Hariharan",
@@ -58,6 +57,12 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
     apple: "/favicon.svg",
+  },
+  alternates: {
+    canonical: "/",
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
   },
 };
 

@@ -6,12 +6,12 @@ import { Sun, Moon, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Skills", href: "#skills" },
-  { label: "Work With Me", href: "#work-with-me" },
-  { label: "Open Source", href: "#open-source" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/#about" },
+  { label: "Projects", href: "/#projects" },
+  { label: "Work With Me", href: "/#work-with-me" },
+  { label: "Posts", href: "/post" },
+  { label: "Open Source", href: "/#open-source" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export function Navbar() {
@@ -37,7 +37,7 @@ export function Navbar() {
     >
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         {/* Name + title — text reveals on scroll */}
-        <a href="#" className="flex items-center gap-3">
+        <a href="/" className="flex items-center gap-3">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
             BH
           </span>

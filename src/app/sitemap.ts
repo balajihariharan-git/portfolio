@@ -1,12 +1,31 @@
 import type { MetadataRoute } from "next";
+import { getAllPosts } from "@/lib/mdx";
+
+const BASE_URL = "https://balajihariharan.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const posts = getAllPosts();
+
+  const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${BASE_URL}/post/${post.slug}`,
+    lastModified: new Date(post.updatedAt || post.publishedAt),
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
   return [
     {
-      url: "https://balajihariharan.com",
+      url: BASE_URL,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1.0,
     },
+    {
+      url: `${BASE_URL}/post`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    ...postEntries,
   ];
 }
