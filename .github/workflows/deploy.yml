@@ -26,6 +26,8 @@ jobs:
             --exclude='node_modules' \
             --exclude='.next' \
             --exclude='.env*' \
+            --exclude='content/memory/*.mdx' \
+            --exclude='content/memory/*.md' \
             -e "ssh -i ~/.ssh/vps_key" \
             ./ ubuntu@${{ secrets.VPS_HOST }}:/home/ubuntu/balaji-portfolio/
 
