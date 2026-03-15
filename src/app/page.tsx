@@ -9,6 +9,8 @@ import { OpenSource } from "@/components/sections/open-source";
 import { Timeline } from "@/components/sections/timeline";
 import { Contact } from "@/components/sections/contact";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <>
