@@ -65,7 +65,7 @@ export function About() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
             >
-              <div className="mb-1 text-2xl font-bold text-primary sm:text-3xl">
+              <div className="mb-1 text-xl font-bold text-primary sm:text-2xl md:text-3xl">
                 <AnimatedCounter
                   value={stat.value}
                   suffix={"suffix" in stat ? stat.suffix : ""}

@@ -83,8 +83,8 @@ export function OpenSource() {
             </div>
 
             {/* Install command */}
-            <div className="mb-6 flex items-center gap-2 rounded-lg bg-[var(--code-bg)] px-4 py-3">
-              <code className="flex-1 font-mono text-sm text-[var(--code-text)]">
+            <div className="mb-6 flex items-center gap-2 overflow-x-auto rounded-lg bg-[var(--code-bg)] px-4 py-3">
+              <code className="min-w-0 flex-1 font-mono text-sm text-[var(--code-text)] break-all">
                 {INSTALL_CMD}
               </code>
               <button

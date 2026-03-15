@@ -47,7 +47,7 @@ export function Contact() {
           {/* Email CTA */}
           <a
             href="mailto:contact@balajihariharan.com"
-            className="mb-12 inline-flex items-center gap-3 rounded-lg bg-primary px-8 py-4 text-base font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+            className="mb-12 inline-flex w-full items-center justify-center gap-3 rounded-lg bg-primary px-8 py-4 text-base font-semibold text-primary-foreground transition-colors hover:bg-primary/90 sm:w-auto"
           >
             <Mail className="h-5 w-5" />
             contact@balajihariharan.com
@@ -55,7 +55,7 @@ export function Contact() {
           </a>
 
           {/* Links */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap">
             {LINKS.map((link) => (
               <a
                 key={link.label}

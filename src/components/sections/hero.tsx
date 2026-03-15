@@ -43,7 +43,7 @@ export function Hero() {
 
           <motion.h1
             variants={itemVariants}
-            className="mb-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl"
+            className="mb-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl"
           >
             Balaji Hariharan
           </motion.h1>
@@ -87,7 +87,7 @@ export function Hero() {
 
         {/* Right — Terminal */}
         <motion.div
-          className="flex items-center"
+          className="flex items-center overflow-hidden"
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
