@@ -59,7 +59,7 @@ export default function TerminalDemo() {
       </div>
 
       {/* Content */}
-      <div className="p-4 font-mono text-sm leading-relaxed">
+      <div className="overflow-x-auto p-4 font-mono text-xs leading-relaxed sm:text-sm">
         {LINES.slice(0, visibleLines).map((line, i) => (
           <div
             key={i}

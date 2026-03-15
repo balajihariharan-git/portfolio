@@ -72,7 +72,7 @@ export function Background() {
         </motion.div>
 
         {/* Career narrative */}
-        <div className="mb-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-12 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {CAREER_HIGHLIGHTS.map((item, i) => (
             <motion.div
               key={item.company}

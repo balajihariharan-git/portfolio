@@ -102,7 +102,7 @@ export function Skills() {
                   <div className="text-sm font-semibold text-card-foreground">
                     {agent.name}
                   </div>
-                  <div className="text-xs text-muted-foreground truncate">
+                  <div className="text-xs text-muted-foreground truncate overflow-hidden">
                     {agent.domain}
                   </div>
                 </div>
