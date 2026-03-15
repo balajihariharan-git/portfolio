@@ -1,0 +1,44 @@
+name: Deploy Portfolio
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/vps_key
+          chmod 600 ~/.ssh/vps_key
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Sync code to VPS
+        run: |
+          rsync -azP --delete \
+            --exclude='.git' \
+            --exclude='node_modules' \
+            --exclude='.next' \
+            --exclude='.env*' \
+            -e "ssh -i ~/.ssh/vps_key" \
+            ./ ubuntu@${{ secrets.VPS_HOST }}:/home/ubuntu/balaji-portfolio/
+
+      - name: Build and deploy container
+        run: |
+          ssh -i ~/.ssh/vps_key ubuntu@${{ secrets.VPS_HOST }} << 'EOF'
+            cd /home/ubuntu
+            docker compose build balaji-portfolio
+            docker compose up -d balaji-portfolio
+          EOF
+
+      - name: Health check
+        run: |
+          sleep 15
+          ssh -i ~/.ssh/vps_key ubuntu@${{ secrets.VPS_HOST }} \
+            'curl -sf http://localhost:5000/' || exit 1
+          echo "Portfolio deployed successfully"
