@@ -1,6 +1,8 @@
 "use client";
 
 import ReactMarkdown from "react-markdown";
+import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
 
 interface MemoryContentProps {
   content: string;
@@ -10,6 +12,8 @@ export function MemoryContent({ content }: MemoryContentProps) {
   return (
     <article className="prose-custom">
       <ReactMarkdown
+        rehypePlugins={[rehypeSlug]}
+        remarkPlugins={[remarkGfm]}
         components={{
           h1: ({ children }) => (
             <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-foreground">
