@@ -33,7 +33,7 @@ export default async function MemoryEntryPage({ params }: PageProps) {
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       {/* Top nav */}
-      <div className="mx-auto mb-8 flex max-w-3xl items-center justify-between xl:max-w-none">
+      <div className="mx-auto mb-8 flex max-w-3xl items-center justify-between lg:max-w-none">
         <Link
           href="/memory"
           className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -54,9 +54,9 @@ export default async function MemoryEntryPage({ params }: PageProps) {
       </div>
 
       {/* Two-column layout: TOC sidebar + Content */}
-      <div className="xl:grid xl:grid-cols-[220px_1fr] xl:gap-10">
+      <div className="lg:grid lg:grid-cols-[220px_1fr] lg:gap-10">
         {/* Desktop TOC sidebar (sticky) */}
-        <div className="hidden xl:block">
+        <div className="hidden lg:block">
           <TableOfContents content={entry.content} variant="desktop" />
         </div>
 
@@ -84,7 +84,7 @@ export default async function MemoryEntryPage({ params }: PageProps) {
           </header>
 
           {/* Mobile/Tablet TOC (collapsible) */}
-          <div className="xl:hidden">
+          <div className="lg:hidden">
             <TableOfContents content={entry.content} variant="mobile" />
           </div>
 
