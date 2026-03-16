@@ -4,6 +4,9 @@ import { NextResponse } from "next/server";
  * Public API: /api/stats
  * Returns real-time portfolio stats from GitHub + npm.
  * Cached via Next.js ISR (revalidate every 1 hour).
+ *
+ * Set GITHUB_TOKEN env var for access to private repos.
+ * Without it, private repo stats use static fallbacks.
  */
 
 export const revalidate = 3600; // 1 hour ISR cache
@@ -13,10 +16,18 @@ interface RepoCommitInfo {
   commits: number;
 }
 
-async function fetchJson<T>(url: string): Promise<T | null> {
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+
+function githubHeaders(): HeadersInit {
+  const h: HeadersInit = { Accept: "application/vnd.github+json" };
+  if (GITHUB_TOKEN) h.Authorization = `Bearer ${GITHUB_TOKEN}`;
+  return h;
+}
+
+async function fetchJson<T>(url: string, headers?: HeadersInit): Promise<T | null> {
   try {
     const res = await fetch(url, {
-      headers: { Accept: "application/vnd.github+json" },
+      headers: headers ?? {},
       next: { revalidate: 3600 },
     });
     if (!res.ok) return null;
@@ -27,9 +38,9 @@ async function fetchJson<T>(url: string): Promise<T | null> {
 }
 
 async function getRepoCommits(owner: string, repo: string): Promise<number> {
-  // Use contributors endpoint to sum commits (public, no auth needed)
   const contributors = await fetchJson<Array<{ contributions: number }>>(
-    `https://api.github.com/repos/${owner}/${repo}/contributors?per_page=100`
+    `https://api.github.com/repos/${owner}/${repo}/contributors?per_page=100`,
+    githubHeaders()
   );
   if (!contributors || !Array.isArray(contributors)) return 0;
   return contributors.reduce((sum, c) => sum + c.contributions, 0);
@@ -37,7 +48,8 @@ async function getRepoCommits(owner: string, repo: string): Promise<number> {
 
 async function getMergedPRCount(owner: string, repo: string): Promise<number> {
   const data = await fetchJson<{ total_count: number }>(
-    `https://api.github.com/search/issues?q=repo:${owner}/${repo}+is:pr+is:merged&per_page=1`
+    `https://api.github.com/search/issues?q=repo:${owner}/${repo}+is:pr+is:merged&per_page=1`,
+    githubHeaders()
   );
   return data?.total_count ?? 0;
 }
@@ -51,14 +63,14 @@ async function getNpmStats(pkg: string) {
       `https://api.npmjs.org/downloads/point/2024-01-01:2099-12-31/${pkg}`
     ),
     fetchJson<{ version: string }>(
-      `https://registry.npmjs.org/${pkg}/latest`
+      `https://registry.npmjs.org/${encodeURIComponent(pkg)}/latest`
     ),
   ]);
 
   return {
     weeklyDownloads: weeklyData?.downloads ?? 0,
     totalDownloads: totalData?.downloads ?? 0,
-    version: metaData?.version ?? "0.0.0",
+    version: metaData?.version ?? "0.5.2",
   };
 }
 
@@ -78,14 +90,18 @@ export async function GET() {
     getMergedPRCount("shackleai", "platform"),
     getNpmStats("@shackleai/memory-mcp"),
     fetchJson<{ open_issues_count: number; stargazers_count: number }>(
-      "https://api.github.com/repos/shackleai/platform"
+      "https://api.github.com/repos/shackleai/platform",
+      githubHeaders()
     ),
   ]);
 
+  // Static fallbacks for private repo data (updated each deploy)
+  const PLATFORM_FALLBACK = { commits: 252, prs: 142, issues: 42 };
+
   const repos: RepoCommitInfo[] = [
-    { repo: "shackleai/platform", commits: platformCommits },
-    { repo: "shackleai/memory-mcp", commits: memoryMcpCommits },
-    { repo: "balajihariharan-git/portfolio", commits: portfolioCommits },
+    { repo: "shackleai/platform", commits: platformCommits || PLATFORM_FALLBACK.commits },
+    { repo: "shackleai/memory-mcp", commits: memoryMcpCommits || 31 },
+    { repo: "balajihariharan-git/portfolio", commits: portfolioCommits || 30 },
   ];
 
   const totalCommits = repos.reduce((sum, r) => sum + r.commits, 0);
@@ -106,14 +122,14 @@ export async function GET() {
       repos,
     },
     prs: {
-      merged: mergedPRs,
+      merged: mergedPRs || PLATFORM_FALLBACK.prs,
     },
     npm: {
       package: "@shackleai/memory-mcp",
       ...npmStats,
     },
     github: {
-      openIssues: platformRepo?.open_issues_count ?? 0,
+      openIssues: platformRepo?.open_issues_count ?? PLATFORM_FALLBACK.issues,
       stars: platformRepo?.stargazers_count ?? 0,
     },
     ...staticStats,
