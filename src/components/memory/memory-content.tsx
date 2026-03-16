@@ -15,23 +15,23 @@ export function MemoryContent({ content }: MemoryContentProps) {
         rehypePlugins={[rehypeSlug]}
         remarkPlugins={[remarkGfm]}
         components={{
-          h1: ({ children }) => (
-            <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-foreground">
+          h1: ({ children, ...props }) => (
+            <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-foreground scroll-mt-24" {...props}>
               {children}
             </h1>
           ),
-          h2: ({ children }) => (
-            <h2 className="mt-10 mb-4 text-2xl font-bold tracking-tight text-foreground">
+          h2: ({ children, ...props }) => (
+            <h2 className="mt-10 mb-4 text-2xl font-bold tracking-tight text-foreground scroll-mt-24" {...props}>
               {children}
             </h2>
           ),
-          h3: ({ children }) => (
-            <h3 className="mt-8 mb-3 text-xl font-semibold text-foreground">
+          h3: ({ children, ...props }) => (
+            <h3 className="mt-8 mb-3 text-xl font-semibold text-foreground scroll-mt-24" {...props}>
               {children}
             </h3>
           ),
-          h4: ({ children }) => (
-            <h4 className="mt-6 mb-2 text-lg font-semibold text-foreground">
+          h4: ({ children, ...props }) => (
+            <h4 className="mt-6 mb-2 text-lg font-semibold text-foreground scroll-mt-24" {...props}>
               {children}
             </h4>
           ),

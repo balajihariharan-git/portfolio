@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { List, ChevronDown } from "lucide-react";
+import GithubSlugger from "github-slugger";
 import { cn } from "@/lib/utils";
 
 interface TocItem {
@@ -12,6 +13,7 @@ interface TocItem {
 
 function extractHeadings(markdown: string): TocItem[] {
   const headings: TocItem[] = [];
+  const slugger = new GithubSlugger();
   const lines = markdown.split("\n");
   let inCodeBlock = false;
 
@@ -31,12 +33,7 @@ function extractHeadings(markdown: string): TocItem[] {
         .replace(/`(.*?)`/g, "$1")
         .replace(/\[(.*?)\]\(.*?\)/g, "$1")
         .trim();
-      const id = text
-        .toLowerCase()
-        .replace(/[^\w\s-]/g, "")
-        .replace(/\s+/g, "-")
-        .replace(/-+/g, "-")
-        .replace(/^-|-$/g, "");
+      const id = slugger.slug(text);
       headings.push({ id, text, level });
     }
   }
