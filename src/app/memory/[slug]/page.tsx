@@ -54,14 +54,14 @@ export default async function MemoryEntryPage({ params }: PageProps) {
       </div>
 
       {/* Two-column layout: TOC sidebar + Content */}
-      <div className="lg:grid lg:grid-cols-[220px_1fr] lg:gap-10">
-        {/* Desktop TOC sidebar (sticky) */}
-        <div className="hidden lg:block">
+      <div className="lg:flex lg:gap-10">
+        {/* Desktop TOC sidebar — flex item, does NOT stretch height */}
+        <aside className="hidden w-[220px] shrink-0 lg:block">
           <TableOfContents content={entry.content} variant="desktop" />
-        </div>
+        </aside>
 
         {/* Main content */}
-        <div className="mx-auto w-full max-w-3xl">
+        <div className="mx-auto min-w-0 w-full max-w-3xl">
           <header className="mb-8">
             <h1 className="mb-3 text-3xl font-bold tracking-tight text-foreground">
               {entry.title}

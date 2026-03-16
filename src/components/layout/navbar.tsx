@@ -30,9 +30,10 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 transition-shadow duration-300",
-        "bg-background/80 backdrop-blur-md border-b border-border",
-        scrolled && "shadow-sm"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        scrolled
+          ? "bg-background/90 backdrop-blur-xl border-b border-border shadow-md"
+          : "bg-background/80 backdrop-blur-md border-b border-transparent"
       )}
     >
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
@@ -43,8 +44,8 @@ export function Navbar() {
           </span>
           <div
             className={cn(
-              "overflow-hidden transition-all duration-300",
-              scrolled ? "w-auto opacity-100" : "w-0 opacity-0"
+              "overflow-hidden transition-all duration-300 ease-out",
+              scrolled ? "max-w-[200px] opacity-100" : "max-w-0 opacity-0"
             )}
           >
             <div className="whitespace-nowrap text-sm font-bold leading-tight text-foreground">Balaji Hariharan</div>
@@ -118,7 +119,7 @@ export function Navbar() {
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <div className="border-t border-border bg-background/95 backdrop-blur-md md:hidden">
+        <div className="border-t border-border bg-background/95 backdrop-blur-xl md:hidden">
           <ul className="mx-auto flex max-w-5xl flex-col gap-1 px-6 py-4">
             {navLinks.map((link) => (
               <li key={link.href}>

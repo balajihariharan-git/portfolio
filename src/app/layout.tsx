@@ -78,7 +78,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <Navbar />
-          <main>{children}</main>
+          <main className="pt-[73px]">{children}</main>
           <Footer />
           <JsonLd />
         </ThemeProvider>

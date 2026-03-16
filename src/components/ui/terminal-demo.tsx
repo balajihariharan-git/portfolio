@@ -28,6 +28,7 @@ const LINES = [
   { text: "", type: "output" as const },
   { text: "$ shackle status --platform", type: "command" as const },
   { text: "  API routes:    142 registered", type: "output" as const },
+  { text: "  Tests:         3,622 across 115 specs", type: "output" as const },
   { text: "  Open issues:   42 tracked", type: "output" as const },
   { text: "  Agent ecosystem ready", type: "success" as const },
 ];

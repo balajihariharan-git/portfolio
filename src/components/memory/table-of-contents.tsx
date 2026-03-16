@@ -61,7 +61,7 @@ export function TableOfContents({ content, variant }: TableOfContentsProps) {
 
   useEffect(() => {
     const observer = new IntersectionObserver(handleObserver, {
-      rootMargin: "-80px 0px -70% 0px",
+      rootMargin: "-100px 0px -70% 0px",
       threshold: 0,
     });
 
@@ -79,7 +79,7 @@ export function TableOfContents({ content, variant }: TableOfContentsProps) {
     setMobileOpen(false);
     const el = document.getElementById(id);
     if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - 80;
+      const y = el.getBoundingClientRect().top + window.scrollY - 100;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
@@ -108,10 +108,10 @@ export function TableOfContents({ content, variant }: TableOfContentsProps) {
     </nav>
   );
 
-  /* Desktop: Dario Amodei-inspired floating TOC */
+  /* Desktop: fixed-position floating TOC */
   if (variant === "desktop") {
     return (
-      <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto">
+      <div className="sticky top-[100px] max-h-[calc(100vh-120px)] overflow-y-auto">
         <h3 className="mb-4 text-lg font-bold tracking-tight text-foreground">
           Contents
         </h3>
