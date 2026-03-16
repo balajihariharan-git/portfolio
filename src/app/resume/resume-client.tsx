@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Download, ArrowLeft, MapPin, Phone, Mail, Globe, Linkedin, Github, ExternalLink } from "lucide-react";
+import { Download, ArrowLeft, MapPin, Mail, Globe, Linkedin, Github, ExternalLink } from "lucide-react";
 
 interface Stats {
   commits: { total: number };
@@ -57,7 +57,7 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
               className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
             >
               <Download className="h-4 w-4" />
-              Download PDF
+              Print / Save as PDF
             </button>
           </div>
         </div>
@@ -77,8 +77,7 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
             </p>
             <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
               <span className="inline-flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" /> Bangalore, India</span>
-              <span className="inline-flex items-center gap-1.5"><Phone className="h-3.5 w-3.5" /> +91 9884245538</span>
-              <a href="mailto:contact@balajihariharan.com" className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"><Mail className="h-3.5 w-3.5" /> contact@balajihariharan.com</a>
+                            <a href="mailto:contact@balajihariharan.com" className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"><Mail className="h-3.5 w-3.5" /> contact@balajihariharan.com</a>
               <a href="https://balajihariharan.com" className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"><Globe className="h-3.5 w-3.5" /> balajihariharan.com</a>
               <a href="https://linkedin.com/in/ibalajihariharan" className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"><Linkedin className="h-3.5 w-3.5" /> LinkedIn</a>
               <a href="https://github.com/shackleai" className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"><Github className="h-3.5 w-3.5" /> GitHub</a>

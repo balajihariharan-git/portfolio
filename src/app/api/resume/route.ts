@@ -149,7 +149,7 @@ export async function GET() {
       <div class="title">AI Solutions Architect &amp; LLM Engineer</div>
     </div>
     <div class="header-right">
-      <div>Bangalore, India &nbsp;|&nbsp; +91 9884245538</div>
+      <div>Bangalore, India</div>
       <div><a href="mailto:contact@balajihariharan.com">contact@balajihariharan.com</a></div>
       <div><a href="https://balajihariharan.com">balajihariharan.com</a> &nbsp;|&nbsp; <a href="https://linkedin.com/in/ibalajihariharan">linkedin.com/in/ibalajihariharan</a></div>
       <div><a href="https://github.com/shackleai">github.com/shackleai</a></div>
