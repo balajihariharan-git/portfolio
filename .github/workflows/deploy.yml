@@ -38,10 +38,17 @@ jobs:
             npm ci --ignore-scripts 2>/dev/null
             # Get DATABASE_URL from .env
             export $(grep DATABASE_URL .env | xargs)
-            # Run drizzle schema migrations
-            npx drizzle-kit push --force 2>&1 || echo "Migration warning (may be already applied)"
-            # Run content migration (upsert MDX files into database)
-            npx tsx scripts/migrate-content.ts 2>&1 || echo "Content migration warning"
+            # Run drizzle schema migrations and content migration via Docker network
+            # (portfolio-postgres hostname only resolves inside Docker network)
+            docker run --rm \
+              --network=$(docker inspect balaji-portfolio --format='{{range $k,$v := .NetworkSettings.Networks}}{{$k}}{{end}}' | head -1) \
+              -v /home/ubuntu/balaji-portfolio:/work \
+              -w /work \
+              -e DATABASE_URL="$DATABASE_URL" \
+              node:22-alpine sh -c '
+                npx drizzle-kit push --force 2>&1 || echo "Schema migration warning"
+                npx tsx scripts/migrate-content.ts 2>&1
+              '
           EOF
 
       - name: Build and deploy container
