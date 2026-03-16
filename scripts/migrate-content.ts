@@ -1,8 +1,10 @@
 /**
- * One-time migration: MDX files → PostgreSQL
+ * Content migration: MDX files → PostgreSQL (upsert)
  *
  * Usage: npx tsx scripts/migrate-content.ts
  * Requires: DATABASE_URL env var
+ *
+ * Inserts new entries, updates existing ones (matched by slug).
  */
 
 import fs from "fs";
@@ -10,6 +12,7 @@ import path from "path";
 import matter from "gray-matter";
 import pg from "pg";
 import { drizzle } from "drizzle-orm/node-postgres";
+import { eq } from "drizzle-orm";
 import { posts, memoryEntries } from "../src/lib/db/schema";
 
 async function migrateContent() {
@@ -50,10 +53,24 @@ async function migrateContent() {
               ? new Date(data.publishedAt)
               : new Date(),
         });
+        console.log(`    Inserted: ${slug}`);
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);
         if (msg.includes("duplicate")) {
-          console.log(`    Skipped (already exists): ${slug}`);
+          console.log(`    Already exists, updating: ${slug}`);
+          await db
+            .update(posts)
+            .set({
+              title: data.title || filename,
+              description: data.description || "",
+              content,
+              category: data.category || "uncategorized",
+              tags: data.tags || [],
+              featured: data.featured || false,
+              updatedAt: data.updatedAt ? new Date(data.updatedAt) : new Date(),
+            })
+            .where(eq(posts.slug, slug));
+          console.log(`    Updated: ${slug}`);
         } else {
           throw err;
         }
@@ -89,10 +106,22 @@ async function migrateContent() {
           createdAt: data.createdAt ? new Date(data.createdAt) : new Date(),
           updatedAt: data.updatedAt ? new Date(data.updatedAt) : new Date(),
         });
+        console.log(`    Inserted: ${slug}`);
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);
         if (msg.includes("duplicate")) {
-          console.log(`    Skipped (already exists): ${slug}`);
+          console.log(`    Already exists, updating: ${slug}`);
+          await db
+            .update(memoryEntries)
+            .set({
+              title: data.title || slug,
+              content,
+              category: data.category || "uncategorized",
+              tags: data.tags || [],
+              updatedAt: data.updatedAt ? new Date(data.updatedAt) : new Date(),
+            })
+            .where(eq(memoryEntries.slug, slug));
+          console.log(`    Updated: ${slug}`);
         } else {
           throw err;
         }

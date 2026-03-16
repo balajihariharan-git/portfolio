@@ -41,9 +41,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Private memory content (repo is public)
-content/memory/*.mdx
-content/memory/*.md
+# Uploads (memory content is deployed via git → VPS → migration script)
 !content/memory/.gitkeep
 
 # Uploads (stored on VPS disk, not in git)

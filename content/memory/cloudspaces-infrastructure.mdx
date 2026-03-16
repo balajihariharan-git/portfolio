@@ -1,0 +1,193 @@
+---
+title: "Cloudspaces Infrastructure — ShackleAI Runtime Architecture"
+category: "architecture"
+createdAt: "2026-03-15"
+updatedAt: "2026-03-15"
+tags: ["Cloudspaces", "Infrastructure", "Docker", "ShackleAI", "Runtime"]
+---
+
+## Overview
+
+Cloudspaces is the **sandboxed execution environment** for AI agents in ShackleAI. Each agent gets an isolated container (a "cloudspace") with its own filesystem, network, and resource limits — so agents can execute code, install packages, and interact with tools without risking the host system or other tenants.
+
+Think of it as **GitHub Codespaces for AI Agents** — ephemeral, isolated, and programmable.
+
+---
+
+## Architecture Diagram (ASCII)
+
+```
+┌─────────────────────────────────────────────────────┐
+│                   ShackleAI Platform                  │
+│                                                       │
+│  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
+│  │ Gateway   │  │ Orchestr │  │   Cloudspaces    │  │
+│  │ (API)     │──│ -ator    │──│   Controller     │  │
+│  └──────────┘  └──────────┘  └────────┬─────────┘  │
+│                                        │             │
+│                    ┌───────────────────┼──────────┐  │
+│                    │   Container Pool  │          │  │
+│                    │                   ▼          │  │
+│                    │  ┌─────┐ ┌─────┐ ┌─────┐   │  │
+│                    │  │ CS-1│ │ CS-2│ │ CS-3│   │  │
+│                    │  │Agent│ │Agent│ │Agent│   │  │
+│                    │  │ A   │ │ B   │ │ C   │   │  │
+│                    │  └──┬──┘ └──┬──┘ └──┬──┘   │  │
+│                    │     │       │       │       │  │
+│                    │  ┌──▼───────▼───────▼──┐   │  │
+│                    │  │   Shared Volume      │   │  │
+│                    │  │   (per-workspace)     │   │  │
+│                    │  └─────────────────────┘   │  │
+│                    └────────────────────────────┘  │
+│                                                       │
+│  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
+│  │ Vault    │  │ Govern-  │  │   Observatory     │  │
+│  │ (Creds)  │  │ ance     │  │   (Metrics)       │  │
+│  └──────────┘  └──────────┘  └──────────────────┘  │
+└─────────────────────────────────────────────────────┘
+```
+
+---
+
+## How Cloudspaces Fits Into ShackleAI
+
+| ShackleAI Service | Role with Cloudspaces |
+|---|---|
+| **Gateway** | Routes agent execution requests to Cloudspaces Controller |
+| **Orchestrator** | Decomposes tasks into steps, each step may spawn a cloudspace |
+| **Cloudspaces Controller** | Manages container lifecycle (create, exec, destroy) |
+| **Vault** | Injects credentials into cloudspace environment securely |
+| **Governance** | Enforces resource limits, network policies, execution timeouts |
+| **Observatory** | Collects logs, metrics, and traces from each cloudspace |
+| **Registry** | Stores pre-built cloudspace images (Python, Node, etc.) |
+
+---
+
+## Cloudspace Lifecycle
+
+```
+Request → Provision → Configure → Execute → Capture → Destroy
+  │          │           │          │          │          │
+  │          │           │          │          │          └─ Container removed
+  │          │           │          │          └─ Output/artifacts saved
+  │          │           │          └─ Agent code runs in sandbox
+  │          │           └─ Inject creds, mount volumes, set limits
+  │          └─ Pull image, create container (< 2s cold start)
+  └─ Orchestrator sends execution request
+```
+
+### Cold Start Budget
+
+| Phase | Target | Notes |
+|---|---|---|
+| Image pull | 0ms | Pre-cached on warm pool |
+| Container create | 200ms | Docker API call |
+| Network setup | 100ms | Bridge + firewall rules |
+| Volume mount | 50ms | tmpfs for speed |
+| Cred injection | 50ms | Vault API call |
+| **Total cold start** | **< 500ms** | Warm pool eliminates image pull |
+
+---
+
+## Container Specification
+
+```yaml
+# Base cloudspace config
+cloudspace:
+  image: shackleai/cloudspace-python:3.12
+  resources:
+    cpu: "0.5"
+    memory: "512Mi"
+    disk: "1Gi"
+  timeout: 300s          # Max execution time
+  network:
+    egress: restricted   # Only whitelisted domains
+    ingress: none        # No inbound connections
+  volumes:
+    - workspace:/workspace  # Agent's working directory
+    - /tmp/output:/output   # Artifact extraction
+  env:
+    - SHACKLE_AGENT_ID
+    - SHACKLE_TASK_ID
+    - SHACKLE_WORKSPACE_PATH=/workspace
+```
+
+---
+
+## Security Model
+
+### Isolation Layers
+
+1. **Container isolation** — each cloudspace is a separate Docker container
+2. **Network isolation** — egress-only, whitelisted domains, no inter-container communication
+3. **Filesystem isolation** — ephemeral tmpfs, destroyed after execution
+4. **Resource isolation** — CPU/memory/disk limits enforced by cgroups
+5. **Credential isolation** — secrets injected as env vars, never written to disk
+6. **Time isolation** — hard timeout kills container after max execution time
+
+### Network Policy
+
+```
+ALLOW: api.openai.com, api.anthropic.com (LLM calls)
+ALLOW: pypi.org, npmjs.org (package installs)
+ALLOW: github.com (code fetches)
+DENY:  * (everything else)
+```
+
+---
+
+## Implementation Plan for Current VPS
+
+Since we're on a single Lightsail VPS ($28.96/mo), the initial implementation uses Docker-in-Docker with resource constraints:
+
+### Phase 1: MVP on Current VPS
+- Docker socket mounted into controller service
+- Pre-built images cached locally
+- Resource limits via `docker run --cpus --memory`
+- Max 3 concurrent cloudspaces (VPS constraint)
+
+### Phase 2: AWS Migration
+- Move to ECS Fargate for true isolation
+- Auto-scaling based on queue depth
+- Separate VPC for cloudspace network
+- S3 for artifact storage
+
+### Cost Projection
+
+| Scale | Infrastructure | Monthly Cost |
+|---|---|---|
+| MVP (current VPS) | 3 concurrent, shared Docker | $0 (included) |
+| 10 concurrent | 2x t3.medium ECS | ~$75/mo |
+| 50 concurrent | Auto-scaling Fargate | ~$200/mo |
+| 100+ concurrent | Fargate + spot | ~$350/mo |
+
+---
+
+## Key Decisions
+
+> **Decision**: Use Docker containers, not VMs or Firecracker.
+> **Why**: Docker gives us sub-second cold starts and we can run it on our current VPS. Firecracker is better isolation but needs bare metal or metal instances ($$$). We can migrate to Firecracker later when scale justifies cost.
+
+> **Decision**: Ephemeral-only, no persistent cloudspaces.
+> **Why**: Persistent containers create state management nightmares. Agents should be stateless — state lives in Memory MCP and the platform database. Destroy after every execution.
+
+> **Decision**: Pre-warm pool of 2 containers.
+> **Why**: Cold start of 500ms is acceptable but not great for interactive use. A warm pool of 2 ready containers gives instant starts for the common case.
+
+---
+
+## Open Questions
+
+- [ ] Should cloudspaces support GPU access for local model inference?
+- [ ] How to handle agents that need to run for hours (long training jobs)?
+- [ ] Should we expose a web terminal UI for debugging cloudspaces?
+- [ ] Inter-cloudspace communication for multi-agent pipelines — message queue or direct?
+
+---
+
+## References
+
+- Docker SDK for Node.js: https://docs.docker.com/engine/api/sdk/
+- AWS Fargate pricing: https://aws.amazon.com/fargate/pricing/
+- Firecracker microVMs: https://firecracker-microvm.github.io/
+- E2B (similar concept): https://e2b.dev/
