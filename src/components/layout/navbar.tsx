@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Sun, Moon, Menu, X, ArrowRight } from "lucide-react";
+import { Sun, Moon, Menu, X, ArrowRight, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -10,6 +10,7 @@ const navLinks = [
   { label: "Projects", href: "/#projects" },
   { label: "Posts", href: "/post" },
   { label: "Open Source", href: "/#open-source" },
+  { label: "Resume", href: "/resume" },
   { label: "Contact", href: "/#contact" },
 ];
 

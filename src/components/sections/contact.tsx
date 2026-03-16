@@ -1,15 +1,24 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Github, Package, ArrowUpRight, Linkedin } from "lucide-react";
+import { Mail, Github, Package, ArrowUpRight, Linkedin, FileText } from "lucide-react";
 
 const LINKS = [
+  {
+    label: "Resume",
+    href: "/resume",
+    icon: FileText,
+    desc: "Live stats, download PDF",
+    color: "bg-primary/10 text-primary" as const,
+    external: false,
+  },
   {
     label: "ShackleAI Platform",
     href: "https://github.com/shackleai/platform",
     icon: Github,
     desc: "11-service agent OS",
     color: "bg-[#333]/10 text-[#e6edf3]" as const,
+    external: true,
   },
   {
     label: "Memory MCP",
@@ -17,6 +26,7 @@ const LINKS = [
     icon: Package,
     desc: "1,440+ weekly downloads",
     color: "bg-red-500/10 text-red-400" as const,
+    external: true,
   },
   {
     label: "GitHub",
@@ -24,6 +34,7 @@ const LINKS = [
     icon: Github,
     desc: "Open source work",
     color: "bg-[#333]/10 text-[#e6edf3]" as const,
+    external: true,
   },
   {
     label: "LinkedIn",
@@ -31,6 +42,7 @@ const LINKS = [
     icon: Linkedin,
     desc: "Professional network",
     color: "bg-blue-500/10 text-blue-400" as const,
+    external: true,
   },
 ];
 
@@ -78,13 +90,12 @@ export function Contact() {
           </a>
 
           {/* Link cards — grid, connected feel */}
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-5">
             {LINKS.map((link, i) => (
               <motion.a
                 key={link.label}
                 href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className="group flex flex-col items-center gap-3 rounded-2xl border border-border bg-card px-4 py-5 text-center transition-all hover:border-primary/40 hover:shadow-md"
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}

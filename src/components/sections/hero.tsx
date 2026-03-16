@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, MessageSquare } from "lucide-react";
+import { ArrowRight, FileText } from "lucide-react";
 import TerminalDemo from "@/components/ui/terminal-demo";
 
 const containerVariants = {
@@ -88,6 +88,13 @@ export function Hero() {
             >
               View Projects
               <ArrowRight className="h-4 w-4" />
+            </a>
+            <a
+              href="/resume"
+              className="inline-flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <FileText className="h-4 w-4" />
+              Resume
             </a>
           </motion.div>
         </motion.div>
