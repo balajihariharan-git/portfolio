@@ -2,13 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Sun, Moon, Menu, X } from "lucide-react";
+import { Sun, Moon, Menu, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "About", href: "/#about" },
   { label: "Projects", href: "/#projects" },
-  { label: "Work With Me", href: "/#work-with-me" },
   { label: "Posts", href: "/post" },
   { label: "Open Source", href: "/#open-source" },
   { label: "Contact", href: "/#contact" },
@@ -31,19 +30,20 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50",
-        "bg-background/80 backdrop-blur-md border-b border-border"
+        "sticky top-0 z-50 transition-shadow duration-300",
+        "bg-background/80 backdrop-blur-md border-b border-border",
+        scrolled && "shadow-sm"
       )}
     >
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        {/* Name + title — text reveals on scroll */}
+        {/* Name + title — reveals on scroll (mobile + desktop) */}
         <a href="/" className="flex items-center gap-3">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
             BH
           </span>
           <div
             className={cn(
-              "hidden overflow-hidden transition-all duration-300 sm:block",
+              "overflow-hidden transition-all duration-300",
               scrolled ? "w-auto opacity-100" : "w-0 opacity-0"
             )}
           >
@@ -53,7 +53,7 @@ export function Navbar() {
         </a>
 
         {/* Desktop nav */}
-        <ul className="hidden items-center gap-8 md:flex">
+        <ul className="hidden items-center gap-6 md:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
               <a
@@ -64,6 +64,21 @@ export function Navbar() {
               </a>
             </li>
           ))}
+          {/* Work With Me — soft CTA highlight */}
+          <li>
+            <a
+              href="/#work-with-me"
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-semibold transition-all duration-300",
+                scrolled
+                  ? "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90"
+                  : "border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20"
+              )}
+            >
+              Work With Me
+              <ArrowRight className={cn("h-3.5 w-3.5 transition-transform", scrolled && "translate-x-0.5")} />
+            </a>
+          </li>
         </ul>
 
         <div className="flex items-center gap-3">
@@ -110,12 +125,23 @@ export function Navbar() {
                 <a
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="block min-h-[44px] rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground flex items-center"
+                  className="flex min-h-[44px] items-center rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                 >
                   {link.label}
                 </a>
               </li>
             ))}
+            {/* Work With Me — mobile CTA */}
+            <li className="mt-2">
+              <a
+                href="/#work-with-me"
+                onClick={() => setMobileOpen(false)}
+                className="flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+              >
+                Work With Me
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </li>
           </ul>
         </div>
       )}

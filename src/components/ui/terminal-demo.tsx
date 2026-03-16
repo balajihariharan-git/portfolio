@@ -4,17 +4,17 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 const LINES = [
-  { text: "$ npx @shackleai/memory-mcp init", type: "command" as const },
-  { text: "Initializing memory store...", type: "output" as const },
-  { text: "Created .shackle/memory.db", type: "success" as const },
+  { text: "$ npm info @shackleai/memory-mcp", type: "command" as const },
+  { text: "  version: 0.5.2", type: "output" as const },
+  { text: "  downloads/week: 157", type: "output" as const },
   { text: "", type: "output" as const },
   { text: "$ shackle agent list", type: "command" as const },
   {
-    text: "  frontend-engineer    opus    Next.js, React, shadcn/ui",
+    text: "  platform-engineer    opus    Backend, API routes",
     type: "output" as const,
   },
   {
-    text: "  platform-engineer    opus    Backend, API routes",
+    text: "  frontend-engineer    opus    Next.js, React, shadcn/ui",
     type: "output" as const,
   },
   {
@@ -22,14 +22,14 @@ const LINES = [
     type: "output" as const,
   },
   {
-    text: "  ...14 more agents",
+    text: "  ...14 more agents    (17 total)",
     type: "muted" as const,
   },
   { text: "", type: "output" as const },
-  { text: "$ shackle status", type: "command" as const },
-  { text: "  Services:     11/11 healthy", type: "success" as const },
-  { text: "  API routes:   142 registered", type: "output" as const },
-  { text: "  Tests:        917 passing", type: "success" as const },
+  { text: "$ shackle status --platform", type: "command" as const },
+  { text: "  API routes:    142 registered", type: "output" as const },
+  { text: "  Open issues:   42 tracked", type: "output" as const },
+  { text: "  Agent ecosystem ready", type: "success" as const },
 ];
 
 export default function TerminalDemo() {
