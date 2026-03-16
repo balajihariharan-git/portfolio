@@ -15,6 +15,21 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { eq } from "drizzle-orm";
 import { posts, memoryEntries } from "../src/lib/db/schema";
 
+function isDuplicateKeyError(err: unknown): boolean {
+  const fullMsg = String(err);
+  if (fullMsg.includes("duplicate") || fullMsg.includes("unique") || fullMsg.includes("23505")) {
+    return true;
+  }
+  // Check nested cause (Drizzle wraps PG errors)
+  if (err && typeof err === "object" && "cause" in err) {
+    const causeMsg = String((err as { cause: unknown }).cause);
+    if (causeMsg.includes("duplicate") || causeMsg.includes("unique") || causeMsg.includes("23505")) {
+      return true;
+    }
+  }
+  return false;
+}
+
 async function migrateContent() {
   const pool = new pg.Pool({
     connectionString: process.env.DATABASE_URL,
@@ -55,8 +70,7 @@ async function migrateContent() {
         });
         console.log(`    Inserted: ${slug}`);
       } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : String(err);
-        if (msg.includes("duplicate") || msg.includes("unique") || msg.includes("23505")) {
+        if (isDuplicateKeyError(err)) {
           console.log(`    Already exists, updating: ${slug}`);
           await db
             .update(posts)
@@ -108,8 +122,7 @@ async function migrateContent() {
         });
         console.log(`    Inserted: ${slug}`);
       } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : String(err);
-        if (msg.includes("duplicate") || msg.includes("unique") || msg.includes("23505")) {
+        if (isDuplicateKeyError(err)) {
           console.log(`    Already exists, updating: ${slug}`);
           await db
             .update(memoryEntries)
