@@ -50,7 +50,7 @@ async function getNpmStats(pkg: string) {
     fetchJson<{ downloads: number }>(
       `https://api.npmjs.org/downloads/point/2024-01-01:2099-12-31/${pkg}`
     ),
-    fetchJson<{ "dist-tags": { latest: string } }>(
+    fetchJson<{ version: string }>(
       `https://registry.npmjs.org/${pkg}/latest`
     ),
   ]);
@@ -58,7 +58,7 @@ async function getNpmStats(pkg: string) {
   return {
     weeklyDownloads: weeklyData?.downloads ?? 0,
     totalDownloads: totalData?.downloads ?? 0,
-    version: metaData?.["dist-tags"]?.latest ?? (metaData as Record<string, string>)?.version ?? "0.0.0",
+    version: metaData?.version ?? "0.0.0",
   };
 }
 
