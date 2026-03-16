@@ -1,10 +1,52 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
-import { STATS } from "@/lib/constants";
+
+interface StatItem {
+  value: number;
+  label: string;
+  suffix?: string;
+}
+
+const FALLBACK_STATS: StatItem[] = [
+  { value: 313, label: "Commits Shipped", suffix: "+" },
+  { value: 3622, label: "Tests Passing", suffix: "+" },
+  { value: 97, label: "Test Coverage", suffix: "%" },
+  { value: 1775, label: "npm Downloads", suffix: "+" },
+  { value: 142, label: "PRs Merged" },
+  { value: 69707, label: "Lines of Code", suffix: "+" },
+];
+
+function buildStats(data: Record<string, unknown>): StatItem[] {
+  const commits = (data.commits as { total: number })?.total ?? 313;
+  const testCount = (data.testCount as number) ?? 3622;
+  const prs = (data.prs as { merged: number })?.merged ?? 142;
+  const npm = data.npm as { totalDownloads: number } | undefined;
+  const loc = (data.linesOfCode as number) ?? 69707;
+  const agentCount = (data.agentCount as number) ?? 17;
+
+  return [
+    { value: commits, label: "Commits Shipped", suffix: "+" },
+    { value: testCount, label: "Tests Passing", suffix: "+" },
+    { value: 97, label: "Test Coverage", suffix: "%" },
+    { value: npm?.totalDownloads ?? 1775, label: "npm Downloads", suffix: "+" },
+    { value: prs, label: "PRs Merged" },
+    { value: loc, label: "Lines of Code", suffix: "+" },
+  ];
+}
 
 export function About() {
+  const [stats, setStats] = useState<StatItem[]>(FALLBACK_STATS);
+
+  useEffect(() => {
+    fetch("/api/stats")
+      .then((r) => r.json())
+      .then((data) => setStats(buildStats(data)))
+      .catch(() => {}); // keep fallbacks
+  }, []);
+
   return (
     <section
       id="about"
@@ -46,7 +88,7 @@ export function About() {
             <p>
               I developed a <strong className="text-foreground">rapid AI-accelerated development
               methodology</strong> — automated GitHub issue management, AI-driven sprint
-              execution, and a 17-agent Claude Code ecosystem that ships production
+              execution, and a 17-agent AI ecosystem that ships production
               code at lightning speed: 18 iterations in 3 days, 252 commits across
               the platform in 11 active days, 7 PyPI releases. This isn&apos;t just
               building AI — it&apos;s using AI to build AI, faster than any traditional team.
@@ -54,9 +96,9 @@ export function About() {
           </div>
         </motion.div>
 
-        {/* Stats grid */}
+        {/* Stats grid — live from /api/stats */}
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-          {STATS.map((stat, i) => (
+          {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
               className="rounded-xl border border-border bg-card p-4 text-center"
@@ -68,7 +110,7 @@ export function About() {
               <div className="mb-1 text-xl font-bold text-primary sm:text-2xl md:text-3xl">
                 <AnimatedCounter
                   value={stat.value}
-                  suffix={"suffix" in stat ? stat.suffix : ""}
+                  suffix={stat.suffix ?? ""}
                 />
               </div>
               <div className="text-xs font-medium text-muted-foreground sm:text-sm">

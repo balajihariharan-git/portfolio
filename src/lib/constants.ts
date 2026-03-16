@@ -125,7 +125,7 @@ export const SKILLS = {
     "Kill-Switch & Approval Workflows",
   ],
   "AI-Accelerated Development": [
-    "17-Agent Claude Code Ecosystem",
+    "17-Agent AI Ecosystem",
     "Automated GitHub Issue Management",
     "AI-Driven Sprint Execution",
     "Rapid Iteration (18 iterations in 3 days)",

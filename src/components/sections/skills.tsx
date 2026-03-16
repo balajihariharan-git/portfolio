@@ -80,7 +80,7 @@ export function Skills() {
                 My 17-Agent AI Development Team
               </h3>
               <p className="text-sm text-muted-foreground">
-                Custom-built Claude Code agents I designed and operate — each specializes in a domain, collectively shipping production code 24/7
+                Custom-built AI agents I designed and operate — each specializes in a domain, collectively shipping production code 24/7
               </p>
             </div>
           </div>
@@ -95,8 +95,8 @@ export function Skills() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: i * 0.03 }}
               >
-                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-primary/10 text-xs font-bold text-primary">
-                  {agent.model === "Opus" ? "O" : "S"}
+                <span className="mt-0.5 inline-flex shrink-0 items-center justify-center rounded-md bg-primary/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-primary">
+                  {agent.model}
                 </span>
                 <div className="min-w-0">
                   <div className="text-sm font-semibold text-card-foreground">
