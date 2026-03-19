@@ -173,7 +173,7 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
                 ]}
               />
               <ProjectCard
-                name="ShackleAI Lending Platform — Open-Source Banking Platform"
+                name="ShackleAI FinServ Platform — Open-Source Financial Services"
                 date="2026 – Present"
                 role="Architect & Lead Developer"
                 tech="TypeScript · Java · Spring Boot · Next.js · PostgreSQL · Python · Docker"

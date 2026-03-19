@@ -214,7 +214,7 @@ export async function GET() {
       </ul>
     </div>
     <div class="project">
-      <div class="project-header"><span class="project-name">ShackleAI Lending Platform &mdash; Open-Source Banking Platform</span><span class="project-meta">2026 &ndash; Present</span></div>
+      <div class="project-header"><span class="project-name">ShackleAI FinServ Platform &mdash; Open-Source Financial Services</span><span class="project-meta">2026 &ndash; Present</span></div>
       <div class="project-subtitle">Architect &amp; Lead Developer</div>
       <div class="project-tech">TypeScript &middot; Java &middot; Spring Boot &middot; Next.js &middot; PostgreSQL &middot; Python &middot; Docker</div>
       <ul>

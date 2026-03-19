@@ -49,15 +49,13 @@ export const PROJECTS: Project[] = [
     },
   },
   {
-    name: "ShackleAI Lending Platform",
+    name: "ShackleAI FinServ Platform",
     description:
       "Open-source reference platform for banking and financial services. Multi-service Java + TypeScript architecture with ML-powered credit scoring, fraud detection, and document AI. 253 commits, 53 PRs, 106 issues closed with 8 specialized AI agents.",
     tech: ["TypeScript", "Java", "Spring Boot", "Next.js", "PostgreSQL", "Python", "Docker"],
     metric: "253",
     metricLabel: "Commits Shipped",
-    links: {
-      github: "https://github.com/shackleai/lending-platform",
-    },
+    links: {},
   },
   {
     name: "ShackleAI Agent Framework (PyPI)",
@@ -228,7 +226,7 @@ export const TIMELINE_ITEMS = [
   },
   {
     year: "2026",
-    title: "Built Lending Platform",
+    title: "Built FinServ Platform",
     description:
       "Open-source banking reference platform \u2014 253 commits, 53 PRs, 106 issues closed, 8 specialized AI agents",
   },
