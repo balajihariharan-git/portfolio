@@ -77,7 +77,7 @@ export function Skills() {
             </div>
             <div>
               <h3 className="text-lg font-bold text-foreground">
-                My 17-Agent AI Development Team
+                My 25-Agent AI Development Team
               </h3>
               <p className="text-sm text-muted-foreground">
                 Custom-built AI agents I designed and operate — each specializes in a domain, collectively shipping production code 24/7
