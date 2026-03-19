@@ -24,7 +24,7 @@ const LINKS = [
     label: "Memory MCP",
     href: "https://www.npmjs.com/package/@shackleai/memory-mcp",
     icon: Package,
-    desc: "1,440+ weekly downloads",
+    desc: "1,784+ downloads",
     color: "bg-red-500/10 text-red-400" as const,
     external: true,
   },

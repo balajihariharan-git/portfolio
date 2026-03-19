@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     siteName: "Balaji Hariharan",
     title: "Balaji Hariharan — AI Solutions Architect",
     description:
-      "AI Solutions Architect building production multi-agent systems. Founder of ShackleAI. Open-source MCP tools with 1,440+ weekly downloads. Hire for AI consulting, freelance projects, or full-time roles.",
+      "AI Solutions Architect building production multi-agent systems. Founder of ShackleAI. Open-source MCP tools with 1,784+ downloads. Hire for AI consulting, freelance projects, or full-time roles.",
     url: "https://balajihariharan.com",
     locale: "en_US",
   },
@@ -50,6 +50,9 @@ export const metadata: Metadata = {
     "AI Startup CTO",
     "ShackleAI",
     "Balaji Hariharan",
+    "agent orchestrator",
+    "banking AI",
+    "lending platform",
   ],
   authors: [{ name: "Balaji Hariharan", url: "https://balajihariharan.com" }],
   creator: "Balaji Hariharan",
