@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600; // ISR: regenerate every 1 hour
 
 interface Stats {
   commits: { total: number };
