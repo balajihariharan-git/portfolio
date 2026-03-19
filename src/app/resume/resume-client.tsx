@@ -173,13 +173,13 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
                 ]}
               />
               <ProjectCard
-                name="ShackleAI Lending Platform — Enterprise Banking Demo"
+                name="ShackleAI Lending Platform — Open-Source Banking Platform"
                 date="2026 – Present"
                 role="Architect & Lead Developer"
                 tech="TypeScript · Java · Spring Boot · Next.js · PostgreSQL · Python · Docker"
                 bullets={[
-                  "Enterprise personal loan platform with ML credit scoring, fraud detection, document AI — 253 commits, 106 issues closed",
-                  "8 specialized banking agents (Architect, Backend, Security, Data, Frontend, Docs, DevOps, QA)",
+                  "Open-source reference platform for banking with ML credit scoring, fraud detection, document AI — 253 commits, 106 issues closed",
+                  "8 specialized FinTech AI agents (Architect, Backend, Security, Data, Frontend, Docs, DevOps, QA)",
                 ]}
               />
               <ProjectCard

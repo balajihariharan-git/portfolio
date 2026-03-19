@@ -214,12 +214,12 @@ export async function GET() {
       </ul>
     </div>
     <div class="project">
-      <div class="project-header"><span class="project-name">ShackleAI Lending Platform &mdash; Enterprise Banking Demo</span><span class="project-meta">2026 &ndash; Present</span></div>
+      <div class="project-header"><span class="project-name">ShackleAI Lending Platform &mdash; Open-Source Banking Platform</span><span class="project-meta">2026 &ndash; Present</span></div>
       <div class="project-subtitle">Architect &amp; Lead Developer</div>
       <div class="project-tech">TypeScript &middot; Java &middot; Spring Boot &middot; Next.js &middot; PostgreSQL &middot; Python &middot; Docker</div>
       <ul>
-        <li>Enterprise personal loan platform with ML credit scoring, fraud detection, document AI &mdash; 253 commits, 106 issues closed</li>
-        <li>8 specialized banking agents (Architect, Backend, Security, Data, Frontend, Docs, DevOps, QA)</li>
+        <li>Open-source reference platform for banking with ML credit scoring, fraud detection, document AI &mdash; 253 commits, 106 issues closed</li>
+        <li>8 specialized FinTech AI agents (Architect, Backend, Security, Data, Frontend, Docs, DevOps, QA)</li>
       </ul>
     </div>
     <div class="project">

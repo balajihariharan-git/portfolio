@@ -20,7 +20,7 @@ export function JsonLd() {
       "Full-Stack Development",
       "TypeScript",
       "Python",
-      "Banking AI Systems",
+      "FinTech AI Systems",
     ],
   };
 

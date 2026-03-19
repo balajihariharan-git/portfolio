@@ -51,11 +51,13 @@ export const PROJECTS: Project[] = [
   {
     name: "ShackleAI Lending Platform",
     description:
-      "Enterprise personal loan lending platform for banking customer demo. Multi-service Java + TypeScript architecture with ML-powered credit scoring, fraud detection, and document AI. 253 commits, 53 PRs, 106 issues closed with 8 specialized banking agents.",
+      "Open-source reference platform for banking and financial services. Multi-service Java + TypeScript architecture with ML-powered credit scoring, fraud detection, and document AI. 253 commits, 53 PRs, 106 issues closed with 8 specialized AI agents.",
     tech: ["TypeScript", "Java", "Spring Boot", "Next.js", "PostgreSQL", "Python", "Docker"],
     metric: "253",
     metricLabel: "Commits Shipped",
-    links: {},
+    links: {
+      github: "https://github.com/shackleai/lending-platform",
+    },
   },
   {
     name: "ShackleAI Agent Framework (PyPI)",
@@ -118,14 +120,14 @@ export const AI_AGENTS = [
   { name: "Content Strategist", model: "Sonnet", domain: "SEO keywords, content planning" },
   { name: "Ecosystem Auditor", model: "Sonnet", domain: "Health checks, velocity tracking" },
   { name: "UX Auditor", model: "Sonnet", domain: "Accessibility, responsive, usability" },
-  { name: "Banking Architect", model: "Opus", domain: "Banking system design, microservices, compliance" },
-  { name: "Banking Backend", model: "Opus", domain: "Java Spring Boot, API services, credit scoring" },
-  { name: "Banking Security", model: "Opus", domain: "PCI-DSS, data encryption, fraud prevention" },
-  { name: "Banking Data", model: "Sonnet", domain: "ML pipelines, credit risk models, analytics" },
-  { name: "Banking Frontend", model: "Sonnet", domain: "Next.js banking UI, dashboards, forms" },
-  { name: "Banking Docs", model: "Sonnet", domain: "Banking API docs, compliance documentation" },
-  { name: "Banking DevOps", model: "Sonnet", domain: "Java CI/CD, Docker, multi-service deploys" },
-  { name: "Banking QA", model: "Sonnet", domain: "Banking test suites, integration testing" },
+  { name: "FinTech Architect", model: "Opus", domain: "Financial system design, microservices, compliance" },
+  { name: "FinTech Backend", model: "Opus", domain: "Java Spring Boot, API services, credit scoring" },
+  { name: "FinTech Security", model: "Opus", domain: "PCI-DSS, data encryption, fraud prevention" },
+  { name: "FinTech Data", model: "Sonnet", domain: "ML pipelines, risk models, analytics" },
+  { name: "FinTech Frontend", model: "Sonnet", domain: "Next.js financial UI, dashboards, forms" },
+  { name: "FinTech Docs", model: "Sonnet", domain: "Financial API docs, compliance documentation" },
+  { name: "FinTech DevOps", model: "Sonnet", domain: "Java CI/CD, Docker, multi-service deploys" },
+  { name: "FinTech QA", model: "Sonnet", domain: "Financial test suites, integration testing" },
 ];
 
 export const SKILLS = {
@@ -228,7 +230,7 @@ export const TIMELINE_ITEMS = [
     year: "2026",
     title: "Built Lending Platform",
     description:
-      "Banking customer demo \u2014 253 commits, 53 PRs, 106 issues closed, 8 specialized banking agents",
+      "Open-source banking reference platform \u2014 253 commits, 53 PRs, 106 issues closed, 8 specialized AI agents",
   },
   {
     year: "2026",

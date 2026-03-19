@@ -112,7 +112,7 @@ export async function GET() {
     testCount: 7852,           // it()/test() calls across all projects
     testFiles: 115,            // .spec.ts/.test.ts files
     apiRoutes: 142,            // route.ts files in platform src/
-    agentCount: 25,            // AI agent ecosystem (17 platform + 8 banking)
+    agentCount: 25,            // AI agent ecosystem (17 platform + 8 fintech)
     services: 11,              // ShackleAI platform services
   };
 
