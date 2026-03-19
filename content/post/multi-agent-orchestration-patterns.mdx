@@ -1,7 +1,7 @@
 ---
-title: "17 AI Agents Shipping Code 24/7: My AI Development Ecosystem"
+title: "25 AI Agents Shipping Code 24/7: My AI Development Ecosystem"
 slug: "multi-agent-orchestration-patterns"
-description: "How I built and operate a 17-agent development ecosystem that ships production code around the clock — architecture, patterns, and lessons learned."
+description: "How I built and operate a 25-agent development ecosystem that ships production code around the clock — architecture, patterns, and lessons learned."
 publishedAt: "2026-03-22"
 updatedAt: "2026-03-22"
 category: "multi-agent"
@@ -9,9 +9,9 @@ tags: ["Multi-Agent", "AI Agents", "AI Development", "DevOps"]
 featured: true
 ---
 
-Most teams building with AI assistants use one model for everything. I built a team of 17 specialized agents, each with deep domain expertise, that collectively ship production code 24/7.
+Most teams building with AI assistants use one model for everything. I built a team of 25 specialized agents, each with deep domain expertise, that collectively ship production code 24/7.
 
-This isn't theoretical. These agents have closed 367 issues, merged 142 PRs, and executed 1,836 CI/CD runs across the ShackleAI platform.
+This isn't theoretical. These agents have closed 539+ issues, merged 241+ PRs, and executed 1,971 CI/CD runs across the ShackleAI platform.
 
 ## Why Specialize?
 
@@ -23,7 +23,7 @@ Each agent in my ecosystem has:
 - Model selection based on task complexity (Opus for architecture, Sonnet for execution)
 - Access to specific tools and file patterns
 
-## The 17 Agents
+## The 25 Agents
 
 Here's how they break down by model tier:
 
@@ -63,10 +63,10 @@ Independent tasks run in parallel across multiple agents. A frontend change and 
 
 ## Results After 3 Months
 
-- 928+ commits shipped
-- 367 issues closed
-- 142 PRs merged
-- 1,836 CI/CD workflow runs
+- 675+ commits shipped
+- 539+ issues closed
+- 241+ PRs merged
+- 1,971 CI/CD workflow runs
 - 97% test coverage maintained
 - 18 iterations in 3 days during peak sprints
 
@@ -76,6 +76,6 @@ Independent tasks run in parallel across multiple agents. A frontend change and 
 
 **2. Agents need guardrails, not freedom.** Every agent has explicit constraints: what files it can modify, what patterns to follow, what to escalate. Unrestricted agents create chaos.
 
-**3. CI/CD is your safety net.** With 17 agents making changes, automated testing catches what review misses. Our pipeline runs lint, build, type-check, and 2,000+ tests on every PR.
+**3. CI/CD is your safety net.** With 25 agents making changes, automated testing catches what review misses. Our pipeline runs lint, build, type-check, and 2,000+ tests on every PR.
 
 This system isn't a product (yet). It's my personal development methodology — and it's why I can build at the pace of a 10-person team while working solo.

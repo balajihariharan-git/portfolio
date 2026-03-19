@@ -10,14 +10,17 @@ export function JsonLd() {
       "https://github.com/shackleai",
       "https://www.npmjs.com/package/@shackleai/memory-mcp",
       "https://github.com/balajihariharan-git",
+      "https://github.com/shackleai/orchestrator",
     ],
     knowsAbout: [
       "AI Agent Orchestration",
+      "Agent Orchestration",
       "MCP Protocol",
       "LLM Infrastructure",
       "Full-Stack Development",
       "TypeScript",
       "Python",
+      "Banking AI Systems",
     ],
   };
 
