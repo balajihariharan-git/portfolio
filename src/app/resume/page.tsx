@@ -24,13 +24,11 @@ interface Stats {
 }
 
 async function fetchStats(): Promise<Stats> {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ||
-    "http://127.0.0.1:3000";
+  // Use internal URL for server-side fetch (container can't reach itself via public URL)
+  const internalUrl = `http://127.0.0.1:${process.env.PORT || 5000}`;
 
   try {
-    const res = await fetch(`${baseUrl}/api/stats`, {
+    const res = await fetch(`${internalUrl}/api/stats`, {
       next: { revalidate: 3600 },
     });
     if (res.ok) return res.json();
