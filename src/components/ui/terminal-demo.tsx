@@ -95,15 +95,21 @@ export default function TerminalDemo() {
       .catch(() => {
         // Fallback static data
         setStats({
-          commits: { total: 311, repos: [{ repo: "shackleai/platform", commits: 252 }, { repo: "shackleai/memory-mcp", commits: 31 }, { repo: "balajihariharan-git/portfolio", commits: 28 }] },
-          prs: { merged: 142 },
-          npm: { package: "@shackleai/memory-mcp", version: "0.5.2", weeklyDownloads: 157, totalDownloads: 1775 },
-          github: { openIssues: 42, stars: 0 },
-          linesOfCode: 69707,
-          testCount: 3622,
-          testFiles: 115,
+          commits: { total: 675, repos: [
+            { repo: "shackleai/platform", commits: 252 },
+            { repo: "shackleai/lending-platform", commits: 253 },
+            { repo: "shackleai/orchestrator", commits: 102 },
+            { repo: "shackleai/memory-mcp", commits: 31 },
+            { repo: "balajihariharan-git/portfolio", commits: 37 },
+          ]},
+          prs: { merged: 241 },
+          npm: { package: "@shackleai/memory-mcp", version: "0.5.2", weeklyDownloads: 129, totalDownloads: 1784 },
+          github: { openIssues: 110, stars: 0 },
+          linesOfCode: 83153,
+          testCount: 7852,
+          testFiles: 405,
           apiRoutes: 142,
-          agentCount: 17,
+          agentCount: 25,
           services: 11,
           updatedAt: new Date().toISOString(),
         });

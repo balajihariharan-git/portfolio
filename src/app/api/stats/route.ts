@@ -80,39 +80,69 @@ export async function GET() {
     platformCommits,
     memoryMcpCommits,
     portfolioCommits,
-    mergedPRs,
+    orchestratorCommits,
+    lendingCommits,
+    platformMergedPRs,
+    orchestratorMergedPRs,
+    lendingMergedPRs,
     npmStats,
     platformRepo,
+    orchestratorRepo,
+    lendingRepo,
   ] = await Promise.all([
     getRepoCommits("shackleai", "platform"),
     getRepoCommits("shackleai", "memory-mcp"),
     getRepoCommits("balajihariharan-git", "portfolio"),
+    getRepoCommits("shackleai", "orchestrator"),
+    getRepoCommits("shackleai", "lending-platform"),
     getMergedPRCount("shackleai", "platform"),
+    getMergedPRCount("shackleai", "orchestrator"),
+    getMergedPRCount("shackleai", "lending-platform"),
     getNpmStats("@shackleai/memory-mcp"),
     fetchJson<{ open_issues_count: number; stargazers_count: number }>(
       "https://api.github.com/repos/shackleai/platform",
       githubHeaders()
     ),
+    fetchJson<{ open_issues_count: number; stargazers_count: number }>(
+      "https://api.github.com/repos/shackleai/orchestrator",
+      githubHeaders()
+    ),
+    fetchJson<{ open_issues_count: number; stargazers_count: number }>(
+      "https://api.github.com/repos/shackleai/lending-platform",
+      githubHeaders()
+    ),
   ]);
 
   // Static fallbacks for private repo data (updated each deploy)
-  const PLATFORM_FALLBACK = { commits: 252, prs: 142, issues: 42 };
+  const PLATFORM_FALLBACK = { commits: 252, prs: 142, issues: 50 };
 
   const repos: RepoCommitInfo[] = [
     { repo: "shackleai/platform", commits: platformCommits || PLATFORM_FALLBACK.commits },
+    { repo: "shackleai/lending-platform", commits: lendingCommits || 253 },
+    { repo: "shackleai/orchestrator", commits: orchestratorCommits || 102 },
     { repo: "shackleai/memory-mcp", commits: memoryMcpCommits || 31 },
-    { repo: "balajihariharan-git/portfolio", commits: portfolioCommits || 30 },
+    { repo: "balajihariharan-git/portfolio", commits: portfolioCommits || 37 },
   ];
 
   const totalCommits = repos.reduce((sum, r) => sum + r.commits, 0);
 
+  // Aggregate merged PRs across all repos
+  const totalMergedPRs = (platformMergedPRs || PLATFORM_FALLBACK.prs)
+    + orchestratorMergedPRs
+    + lendingMergedPRs;
+
+  // Aggregate open issues across repos
+  const totalOpenIssues = (platformRepo?.open_issues_count ?? PLATFORM_FALLBACK.issues)
+    + (orchestratorRepo?.open_issues_count ?? 0)
+    + (lendingRepo?.open_issues_count ?? 0);
+
   // Static counts (updated via deploy pipeline, verified from filesystem)
   const staticStats = {
-    linesOfCode: 69707,        // TypeScript LOC across all projects
-    testCount: 3622,           // it()/test() calls in shackleai/platform
-    testFiles: 115,            // .spec.ts/.test.ts files
+    linesOfCode: 83153,        // TypeScript LOC across all projects
+    testCount: 7852,           // it()/test() calls across projects
+    testFiles: 405,            // .spec.ts/.test.ts files
     apiRoutes: 142,            // route.ts files in platform src/
-    agentCount: 17,            // AI agent ecosystem
+    agentCount: 25,            // AI agent ecosystem
     services: 11,              // ShackleAI platform services
   };
 
@@ -122,14 +152,14 @@ export async function GET() {
       repos,
     },
     prs: {
-      merged: mergedPRs || PLATFORM_FALLBACK.prs,
+      merged: totalMergedPRs,
     },
     npm: {
       package: "@shackleai/memory-mcp",
       ...npmStats,
     },
     github: {
-      openIssues: platformRepo?.open_issues_count ?? PLATFORM_FALLBACK.issues,
+      openIssues: totalOpenIssues,
       stars: platformRepo?.stargazers_count ?? 0,
     },
     ...staticStats,

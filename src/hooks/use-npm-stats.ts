@@ -35,7 +35,7 @@ export function useNpmStats(packageName: string): NpmStats {
       } catch (err) {
         if (!cancelled) {
           setStats({
-            weeklyDownloads: 1440,
+            weeklyDownloads: 129,
             loading: false,
             error: err instanceof Error ? err.message : "Unknown error",
           });
