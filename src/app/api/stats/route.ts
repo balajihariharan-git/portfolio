@@ -96,7 +96,7 @@ export async function GET() {
   ]);
 
   // Static fallbacks for private repo data (updated each deploy)
-  const PLATFORM_FALLBACK = { commits: 252, prs: 142, issues: 42 };
+  const PLATFORM_FALLBACK = { commits: 675, prs: 241, issues: 539 };
 
   const repos: RepoCommitInfo[] = [
     { repo: "shackleai/platform", commits: platformCommits || PLATFORM_FALLBACK.commits },
@@ -108,11 +108,11 @@ export async function GET() {
 
   // Static counts (updated via deploy pipeline, verified from filesystem)
   const staticStats = {
-    linesOfCode: 69707,        // TypeScript LOC across all projects
-    testCount: 3622,           // it()/test() calls in shackleai/platform
+    linesOfCode: 83153,        // TypeScript LOC across all projects
+    testCount: 7852,           // it()/test() calls across all projects
     testFiles: 115,            // .spec.ts/.test.ts files
     apiRoutes: 142,            // route.ts files in platform src/
-    agentCount: 17,            // AI agent ecosystem
+    agentCount: 25,            // AI agent ecosystem (17 platform + 8 banking)
     services: 11,              // ShackleAI platform services
   };
 

@@ -63,7 +63,7 @@ export function Skills() {
           ))}
         </div>
 
-        {/* 17-Agent Ecosystem */}
+        {/* 25-Agent Ecosystem */}
         <motion.div
           className="mt-16"
           initial={{ opacity: 0, y: 20 }}

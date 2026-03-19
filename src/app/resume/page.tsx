@@ -39,13 +39,13 @@ async function fetchStats(): Promise<Stats> {
 
   return {
     commits: { total: 1100 },
-    prs: { merged: 142 },
-    npm: { weeklyDownloads: 1400, totalDownloads: 8000, version: "0.5.2" },
-    github: { openIssues: 42, stars: 0 },
-    linesOfCode: 69707,
-    testCount: 3622,
+    prs: { merged: 241 },
+    npm: { weeklyDownloads: 1784, totalDownloads: 8000, version: "0.5.2" },
+    github: { openIssues: 539, stars: 0 },
+    linesOfCode: 83153,
+    testCount: 7852,
     apiRoutes: 142,
-    agentCount: 17,
+    agentCount: 25,
     services: 11,
     updatedAt: new Date().toISOString(),
   };
