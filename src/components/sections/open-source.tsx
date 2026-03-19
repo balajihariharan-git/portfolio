@@ -138,6 +138,57 @@ export function OpenSource() {
             </div>
           </div>
         </motion.div>
+
+        {/* Orchestrator card */}
+        <motion.div
+          className="mt-6 overflow-hidden rounded-xl border border-border bg-card"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <div className="p-6 sm:p-8">
+            <div className="mb-4 flex flex-wrap items-center gap-3">
+              <Package className="h-6 w-6 text-primary" />
+              <h3 className="text-xl font-bold text-card-foreground">
+                @shackleai/orchestrator
+              </h3>
+              <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                Open Source
+              </span>
+            </div>
+            <p className="mb-6 max-w-2xl text-base leading-relaxed text-muted-foreground">
+              Multi-agent orchestrator for production workflows. MCP-native,
+              PostgreSQL-backed, multi-package monorepo.
+            </p>
+            <div className="mb-6 flex flex-wrap gap-2">
+              {[
+                "Multi-agent orchestration",
+                "MCP-native",
+                "PostgreSQL",
+                "TypeScript",
+              ].map((feature) => (
+                <span
+                  key={feature}
+                  className="rounded-md border border-border bg-muted/50 px-3 py-1 text-sm text-muted-foreground"
+                >
+                  {feature}
+                </span>
+              ))}
+            </div>
+            <div className="flex items-center gap-4 border-t border-border pt-6">
+              <a
+                href="https://github.com/shackleai/orchestrator"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                <Github className="h-4 w-4" />
+                GitHub
+              </a>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
