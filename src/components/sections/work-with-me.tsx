@@ -37,7 +37,7 @@ const ENGAGEMENT_TYPES = [
     icon: Zap,
     title: "Rapid AI Development",
     description:
-      "I use an AI-accelerated iteration methodology — automated GitHub issue management, AI-driven sprint execution, and a 17-agent ecosystem that ships production code at lightning speed. 18 iterations in 3 days, 252 commits in 11 days.",
+      "I use an AI-accelerated iteration methodology — automated GitHub issue management, AI-driven sprint execution, and a 25-agent ecosystem that ships production code at lightning speed. 18 iterations in 3 days, 675+ commits across 5 repos.",
     audience: "Teams that need to move fast",
   },
   {

@@ -15,9 +15,9 @@ export const PROJECTS: Project[] = [
   {
     name: "ShackleAI Platform",
     description:
-      "The Operating System for AI Agents — 11 microservices, 142 API routes, 367 issues closed, 142 PRs merged, 1,836 CI/CD workflow runs. LLM Gateway, Credential Vault, Agent Governance, Orchestrator, and MCP-native tool infrastructure.",
+      "The Operating System for AI Agents — 11 microservices, 142 API routes, 539+ issues closed, 241+ PRs merged, 1,971 CI/CD workflow runs. LLM Gateway, Credential Vault, Agent Governance, Orchestrator, and MCP-native tool infrastructure.",
     tech: ["Next.js", "TypeScript", "PostgreSQL", "pgvector", "Redis", "Docker", "MCP"],
-    metric: "142",
+    metric: "241+",
     metricLabel: "PRs Shipped",
     links: {
       github: "https://github.com/shackleai/platform",
@@ -29,12 +29,33 @@ export const PROJECTS: Project[] = [
     description:
       "Open-source persistent memory for AI coding tools. The first MCP-native memory server with semantic search, offline embeddings, and zero-config setup. Used by Claude Code, Cursor, and Windsurf developers worldwide.",
     tech: ["TypeScript", "MCP Protocol", "Embeddings", "sqlite-vec", "Transformers.js"],
-    metric: "1,440+",
-    metricLabel: "Weekly Downloads",
+    metric: "1,784+",
+    metricLabel: "Total Downloads",
     links: {
       github: "https://github.com/shackleai/memory-mcp",
       npm: "https://www.npmjs.com/package/@shackleai/memory-mcp",
     },
+  },
+  {
+    name: "ShackleAI Orchestrator",
+    description:
+      "Open-source multi-agent orchestrator for production workflows. MCP-native, PostgreSQL-backed, multi-package monorepo on npm. 102 commits, 46 PRs merged, 66 issues closed across 3 milestones.",
+    tech: ["TypeScript", "MCP Protocol", "PostgreSQL", "Docker", "npm Monorepo"],
+    metric: "46",
+    metricLabel: "PRs Merged",
+    links: {
+      github: "https://github.com/shackleai/orchestrator",
+      npm: "https://www.npmjs.com/package/@shackleai/orchestrator",
+    },
+  },
+  {
+    name: "ShackleAI Lending Platform",
+    description:
+      "Enterprise personal loan lending platform for banking customer demo. Multi-service Java + TypeScript architecture with ML-powered credit scoring, fraud detection, and document AI. 253 commits, 53 PRs, 106 issues closed with 8 specialized banking agents.",
+    tech: ["TypeScript", "Java", "Spring Boot", "Next.js", "PostgreSQL", "Python", "Docker"],
+    metric: "253",
+    metricLabel: "Commits Shipped",
+    links: {},
   },
   {
     name: "ShackleAI Agent Framework (PyPI)",
@@ -97,6 +118,14 @@ export const AI_AGENTS = [
   { name: "Content Strategist", model: "Sonnet", domain: "SEO keywords, content planning" },
   { name: "Ecosystem Auditor", model: "Sonnet", domain: "Health checks, velocity tracking" },
   { name: "UX Auditor", model: "Sonnet", domain: "Accessibility, responsive, usability" },
+  { name: "Banking Architect", model: "Opus", domain: "Banking system design, microservices, compliance" },
+  { name: "Banking Backend", model: "Opus", domain: "Java Spring Boot, API services, credit scoring" },
+  { name: "Banking Security", model: "Opus", domain: "PCI-DSS, data encryption, fraud prevention" },
+  { name: "Banking Data", model: "Sonnet", domain: "ML pipelines, credit risk models, analytics" },
+  { name: "Banking Frontend", model: "Sonnet", domain: "Next.js banking UI, dashboards, forms" },
+  { name: "Banking Docs", model: "Sonnet", domain: "Banking API docs, compliance documentation" },
+  { name: "Banking DevOps", model: "Sonnet", domain: "Java CI/CD, Docker, multi-service deploys" },
+  { name: "Banking QA", model: "Sonnet", domain: "Banking test suites, integration testing" },
 ];
 
 export const SKILLS = {
@@ -125,12 +154,12 @@ export const SKILLS = {
     "Kill-Switch & Approval Workflows",
   ],
   "AI-Accelerated Development": [
-    "17-Agent AI Ecosystem",
+    "25-Agent AI Ecosystem",
     "Automated GitHub Issue Management",
     "AI-Driven Sprint Execution",
     "Rapid Iteration (18 iterations in 3 days)",
-    "1,836 Automated CI/CD Runs",
-    "367 Issues Resolved via Agents",
+    "1,971 Automated CI/CD Runs",
+    "539+ Issues Resolved via Agents",
   ],
   "Platform Engineering": [
     "PostgreSQL + pgvector",
@@ -151,12 +180,12 @@ export const SKILLS = {
 } as const;
 
 export const STATS = [
-  { value: 928, label: "Commits Shipped", suffix: "+" },
-  { value: 2000, label: "Tests Passing", suffix: "+" },
+  { value: 675, label: "Commits Shipped", suffix: "+" },
+  { value: 7852, label: "Tests Passing", suffix: "+" },
   { value: 97, label: "Test Coverage", suffix: "%" },
-  { value: 1440, label: "Weekly npm Downloads", suffix: "+" },
-  { value: 1836, label: "CI/CD Runs" },
-  { value: 367, label: "Issues Closed" },
+  { value: 1784, label: "npm Downloads", suffix: "+" },
+  { value: 1971, label: "CI/CD Runs" },
+  { value: 539, label: "Issues Closed", suffix: "+" },
 ] as const;
 
 export const TIMELINE_ITEMS = [
@@ -169,7 +198,7 @@ export const TIMELINE_ITEMS = [
     year: "2025",
     title: "Launched Memory MCP",
     description:
-      "Published @shackleai/memory-mcp on npm \u2014 now 1,440+ weekly downloads globally",
+      "Published @shackleai/memory-mcp on npm \u2014 now 1,784+ weekly downloads globally",
   },
   {
     year: "2025",
@@ -191,9 +220,21 @@ export const TIMELINE_ITEMS = [
   },
   {
     year: "2026",
+    title: "Launched Orchestrator",
+    description:
+      "Open-source agent orchestrator on npm \u2014 102 commits, 46 PRs merged, multi-package monorepo",
+  },
+  {
+    year: "2026",
+    title: "Built Lending Platform",
+    description:
+      "Banking customer demo \u2014 253 commits, 53 PRs, 106 issues closed, 8 specialized banking agents",
+  },
+  {
+    year: "2026",
     title: "AI-Accelerated Development",
     description:
-      "Built 17-agent ecosystem \u2014 928+ commits, 142 PRs merged, 1,836 CI/CD runs, 367 issues closed",
+      "Built 25-agent ecosystem \u2014 675+ commits, 241+ PRs merged, 1,971 CI/CD runs, 539+ issues closed",
   },
 ] as const;
 
