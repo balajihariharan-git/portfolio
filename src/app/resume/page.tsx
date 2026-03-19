@@ -24,9 +24,10 @@ interface Stats {
 }
 
 async function fetchStats(): Promise<Stats> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000";
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ||
+    "http://127.0.0.1:3000";
 
   try {
     const res = await fetch(`${baseUrl}/api/stats`, {
@@ -38,9 +39,9 @@ async function fetchStats(): Promise<Stats> {
   }
 
   return {
-    commits: { total: 1100 },
+    commits: { total: 750 },
     prs: { merged: 241 },
-    npm: { weeklyDownloads: 1784, totalDownloads: 8000, version: "0.5.2" },
+    npm: { weeklyDownloads: 129, totalDownloads: 1784, version: "0.5.2" },
     github: { openIssues: 539, stars: 0 },
     linesOfCode: 83153,
     testCount: 7852,
