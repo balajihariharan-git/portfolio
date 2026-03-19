@@ -92,7 +92,7 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
               { value: "97%", label: "Coverage" },
               { value: stats.linesOfCode.toLocaleString() + "+", label: "Lines of Code" },
               { value: String(stats.prs.merged), label: "PRs Merged" },
-              { value: "367", label: "Issues Closed" },
+              { value: "539+", label: "Issues Closed" },
             ].map((m) => (
               <div key={m.label} className="rounded-xl border border-border bg-card p-3 text-center">
                 <div className="text-lg font-bold text-primary sm:text-xl">{m.value}</div>
@@ -145,8 +145,8 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
                   "Built multi-engine agent orchestration (CrewAI + OpenClaw) with LLM-driven plan decomposition into sequential/parallel execution steps",
                   "Designed LLM Gateway with multi-provider routing (OpenAI, Anthropic, Azure, Bedrock), budget enforcement, PII scrubbing, per-call cost tracking",
                   "Implemented Vault for AES-256 encrypted credential storage with runtime injection into sandboxed agent containers",
-                  <>Shipped <strong>{stats.apiRoutes} API routes</strong>, <strong>59 migrations</strong>, <strong>367+ issues closed</strong>, <strong>{stats.prs.merged} PRs merged</strong>, <strong>213+ unit tests</strong></>,
-                  <>Engineered AI-accelerated dev methodology: <strong>{stats.agentCount}-agent ecosystem</strong> achieving 18 iterations in 3 days, 252 commits in 11 days</>,
+                  <>Shipped <strong>{stats.apiRoutes} API routes</strong>, <strong>59 migrations</strong>, <strong>539+ issues closed</strong>, <strong>241+ PRs merged</strong>, <strong>213+ unit tests</strong></>,
+                  <>Engineered AI-accelerated dev methodology: <strong>{stats.agentCount}-agent ecosystem</strong> achieving 18 iterations in 3 days, 675+ commits across the platform</>,
                 ]}
               />
               <ProjectCard
@@ -159,6 +159,27 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
                   "Built the first MCP-native persistent memory server for AI coding assistants (Claude, Cursor, Windsurf, Copilot)",
                   <>Achieved <strong>{fmt(stats.npm.weeklyDownloads)} weekly npm downloads</strong> with 11 MCP tools, zero-config setup, and fully offline embeddings</>,
                   "Semantic search via MiniLM-L6-v2 (384-dim) with sqlite-vec; project-scoped memory, TODO tracking, export/import, cloud sync",
+                ]}
+              />
+              <ProjectCard
+                name="@shackleai/orchestrator — Open-Source Agent Orchestrator"
+                date="2026 – Present"
+                role="Creator & Lead Developer"
+                links={[{ label: "npm", href: "https://npmjs.com/package/@shackleai/orchestrator" }, { label: "GitHub", href: "https://github.com/shackleai/orchestrator" }]}
+                tech="TypeScript · MCP Protocol · PostgreSQL · Docker · npm Monorepo"
+                bullets={[
+                  "Open-source multi-agent orchestrator with MCP-native tool infrastructure, 46 PRs merged across 3 milestones",
+                  "Multi-package monorepo (@shackleai/orchestrator, @shackleai/core, @shackleai/db, @shackleai/shared)",
+                ]}
+              />
+              <ProjectCard
+                name="ShackleAI Lending Platform — Enterprise Banking Demo"
+                date="2026 – Present"
+                role="Architect & Lead Developer"
+                tech="TypeScript · Java · Spring Boot · Next.js · PostgreSQL · Python · Docker"
+                bullets={[
+                  "Enterprise personal loan platform with ML credit scoring, fraud detection, document AI — 253 commits, 106 issues closed",
+                  "8 specialized banking agents (Architect, Backend, Security, Data, Frontend, Docs, DevOps, QA)",
                 ]}
               />
               <ProjectCard
@@ -261,7 +282,7 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
               {[
                 { title: "How I Built an MCP Server from Scratch", desc: "Architecture deep-dive: MCP-native memory with SQLite + vector search", year: "2026" },
                 { title: "From RPA to AI Agents: 18 Years of Enterprise Automation", desc: "Career perspective on the $20B+ automation market shift", year: "2026" },
-                { title: "17 AI Agents Shipping Code 24/7", desc: "Multi-agent orchestration patterns, model selection, CI/CD as safety net", year: "2026" },
+                { title: "25 AI Agents Shipping Code 24/7", desc: "Multi-agent orchestration patterns, model selection, CI/CD as safety net", year: "2026" },
               ].map((p) => (
                 <div key={p.title} className="flex items-start gap-3 rounded-lg border border-border bg-card/50 px-4 py-3">
                   <div className="flex-1">

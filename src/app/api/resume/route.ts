@@ -23,12 +23,12 @@ interface Stats {
 async function getStats(): Promise<Stats> {
   const fallback: Stats = {
     commits: { total: 1100 },
-    prs: { merged: 142 },
-    npm: { weeklyDownloads: 1400, version: "0.5.2" },
-    linesOfCode: 69707,
-    testCount: 3622,
+    prs: { merged: 241 },
+    npm: { weeklyDownloads: 1784, version: "0.5.2" },
+    linesOfCode: 83153,
+    testCount: 7852,
     apiRoutes: 142,
-    agentCount: 17,
+    agentCount: 25,
     services: 11,
   };
 
@@ -190,7 +190,7 @@ export async function GET() {
         <li>Built multi-engine agent orchestration (CrewAI + OpenClaw) with LLM-driven plan decomposition into sequential/parallel execution steps</li>
         <li>Designed LLM Gateway with multi-provider routing (OpenAI, Anthropic, Azure, Bedrock), budget enforcement, PII scrubbing, per-call cost tracking</li>
         <li>Implemented Vault for AES-256 encrypted credential storage with runtime injection into sandboxed agent containers</li>
-        <li>Shipped <span class="metric">${s.apiRoutes} API routes</span>, <span class="metric">59 migrations</span>, <span class="metric">367+ issues closed</span>, <span class="metric">${s.prs.merged} PRs merged</span>, <span class="metric">213+ unit tests</span></li>
+        <li>Shipped <span class="metric">${s.apiRoutes} API routes</span>, <span class="metric">59 migrations</span>, <span class="metric">539+ issues closed</span>, <span class="metric">241+ PRs merged</span>, <span class="metric">213+ unit tests</span></li>
         <li>Engineered AI-accelerated dev methodology: <span class="metric">${s.agentCount}-agent ecosystem</span> achieving 18 iterations in 3 days, 252 commits in 11 days</li>
       </ul>
     </div>
@@ -202,6 +202,24 @@ export async function GET() {
         <li>Built the first MCP-native persistent memory server for AI coding assistants (Claude, Cursor, Windsurf, Copilot)</li>
         <li>Achieved <span class="metric">${fmt(s.npm.weeklyDownloads)} weekly npm downloads</span> with 11 MCP tools, zero-config setup, and fully offline embeddings</li>
         <li>Semantic search via MiniLM-L6-v2 (384-dim) with sqlite-vec; project-scoped memory, TODO tracking, export/import, cloud sync</li>
+      </ul>
+    </div>
+    <div class="project">
+      <div class="project-header"><span class="project-name">@shackleai/orchestrator &mdash; Open-Source Agent Orchestrator</span><span class="project-meta">2026 &ndash; Present</span></div>
+      <div class="project-subtitle">Creator &amp; Lead Developer &nbsp;|&nbsp; Published on npm (MIT) &nbsp;|&nbsp; github.com/shackleai/orchestrator</div>
+      <div class="project-tech">TypeScript &middot; MCP Protocol &middot; PostgreSQL &middot; Docker &middot; npm Monorepo</div>
+      <ul>
+        <li>Open-source multi-agent orchestrator with MCP-native tool infrastructure, 46 PRs merged across 3 milestones</li>
+        <li>Multi-package monorepo (@shackleai/orchestrator, @shackleai/core, @shackleai/db, @shackleai/shared)</li>
+      </ul>
+    </div>
+    <div class="project">
+      <div class="project-header"><span class="project-name">ShackleAI Lending Platform &mdash; Enterprise Banking Demo</span><span class="project-meta">2026 &ndash; Present</span></div>
+      <div class="project-subtitle">Architect &amp; Lead Developer</div>
+      <div class="project-tech">TypeScript &middot; Java &middot; Spring Boot &middot; Next.js &middot; PostgreSQL &middot; Python &middot; Docker</div>
+      <ul>
+        <li>Enterprise personal loan platform with ML credit scoring, fraud detection, document AI &mdash; 253 commits, 106 issues closed</li>
+        <li>8 specialized banking agents (Architect, Backend, Security, Data, Frontend, Docs, DevOps, QA)</li>
       </ul>
     </div>
     <div class="project">
@@ -252,7 +270,7 @@ export async function GET() {
     <div class="pubs">
       <div><strong>&ldquo;How I Built an MCP Server from Scratch&rdquo;</strong> &mdash; Architecture deep-dive: MCP-native memory with SQLite + vector search <span class="date-muted">(2026)</span></div>
       <div><strong>&ldquo;From RPA to AI Agents: 18 Years of Enterprise Automation&rdquo;</strong> &mdash; Career perspective on the $20B+ automation market shift <span class="date-muted">(2026)</span></div>
-      <div><strong>&ldquo;17 AI Agents Shipping Code 24/7&rdquo;</strong> &mdash; Multi-agent orchestration patterns, model selection, CI/CD as safety net <span class="date-muted">(2026)</span></div>
+      <div><strong>&ldquo;25 AI Agents Shipping Code 24/7&rdquo;</strong> &mdash; Multi-agent orchestration patterns, model selection, CI/CD as safety net <span class="date-muted">(2026)</span></div>
     </div>
   </div>
 
@@ -272,7 +290,7 @@ export async function GET() {
       <div class="m-card"><div class="m-num">97%</div><div class="m-label">Test Coverage</div></div>
       <div class="m-card"><div class="m-num">${s.linesOfCode.toLocaleString()}+</div><div class="m-label">Lines of Code</div></div>
       <div class="m-card"><div class="m-num">${s.prs.merged}</div><div class="m-label">PRs Merged</div></div>
-      <div class="m-card"><div class="m-num">367</div><div class="m-label">Issues Closed</div></div>
+      <div class="m-card"><div class="m-num">539+</div><div class="m-label">Issues Closed</div></div>
     </div>
   </div>
 </div>
