@@ -46,6 +46,7 @@ jobs:
               -w /work \
               -e DATABASE_URL="$DATABASE_URL" \
               node:22-alpine sh -c '
+                npm install --no-save gray-matter reading-time 2>/dev/null
                 npx drizzle-kit push --force 2>&1 || echo "Schema migration warning"
                 npx tsx scripts/migrate-content.ts 2>&1
               '
