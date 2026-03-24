@@ -242,7 +242,7 @@ export const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
-  { label: "Work With Me", href: "#work-with-me" },
+  // { label: "Work With Me", href: "#work-with-me" },
   { label: "Open Source", href: "#open-source" },
   { label: "Contact", href: "#contact" },
 ];

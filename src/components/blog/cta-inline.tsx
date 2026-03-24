@@ -10,7 +10,7 @@ export function CtaInline() {
         I help enterprises and startups design and build production AI agent systems.
       </p>
       <a
-        href="/#work-with-me"
+        href="/#contact"
         className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
       >
         Let&apos;s talk

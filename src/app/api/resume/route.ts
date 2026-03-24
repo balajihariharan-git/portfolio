@@ -183,7 +183,7 @@ export async function GET() {
     <div class="section-title">AI Projects &amp; Products</div>
     <div class="project">
       <div class="project-header"><span class="project-name">ShackleAI Platform &mdash; The Operating System for AI Agents</span><span class="project-meta">2025 &ndash; Present</span></div>
-      <div class="project-subtitle">Founder &amp; Principal Engineer &nbsp;|&nbsp; shackleai.com &nbsp;|&nbsp; github.com/shackleai/platform</div>
+      <div class="project-subtitle">Creator &amp; Principal Engineer &nbsp;|&nbsp; shackleai.com &nbsp;|&nbsp; github.com/shackleai/platform</div>
       <div class="project-tech">Next.js 16 &middot; TypeScript &middot; PostgreSQL + pgvector &middot; Redis &middot; Docker &middot; MCP SDK &middot; OpenTelemetry &middot; Stripe &middot; AWS</div>
       <ul>
         <li>Architected <span class="metric">${s.services} core microservices</span>: Gateway, ToolCloud, Vault, Memory, Runtime, Identity, Governance, Observatory, Registry, Mesh, LLM Gateway</li>

@@ -137,7 +137,7 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
               <ProjectCard
                 name="ShackleAI Platform — The Operating System for AI Agents"
                 date="2025 – Present"
-                role="Founder & Principal Engineer"
+                role="Creator & Principal Engineer"
                 links={[{ label: "shackleai.com", href: "https://shackleai.com" }, { label: "GitHub", href: "https://github.com/shackleai/platform" }]}
                 tech="Next.js 16 · TypeScript · PostgreSQL + pgvector · Redis · Docker · MCP SDK · OpenTelemetry · Stripe · AWS"
                 bullets={[
@@ -205,7 +205,7 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
               <ProjectCard
                 name="Errakaaram — Production E-Commerce Platform"
                 date="2024 – Present"
-                role="Founder & Full-Stack Engineer"
+                role="Creator & Full-Stack Engineer"
                 links={[{ label: "errakaaram.com", href: "https://errakaaram.com" }]}
                 tech="Next.js 15 · Express 5 · MongoDB · Redis · AWS · Razorpay · Docker"
                 bullets={[

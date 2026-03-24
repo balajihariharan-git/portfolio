@@ -38,7 +38,7 @@ export function Hero() {
             variants={itemVariants}
             className="mb-4 flex flex-wrap gap-2"
           >
-            {["AI Solutions Architect", "LLM Engineer", "Founder"].map((role) => (
+            {["AI Solutions Architect", "LLM Engineer", "Creator of ShackleAI"].map((role) => (
               <span
                 key={role}
                 className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary sm:text-sm"
@@ -76,10 +76,10 @@ export function Hero() {
             className="flex flex-wrap gap-4"
           >
             <a
-              href="#work-with-me"
+              href="#contact"
               className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              Work With Me
+              Get In Touch
               <ArrowRight className="h-4 w-4" />
             </a>
             <a

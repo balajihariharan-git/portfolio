@@ -71,7 +71,7 @@ export function About() {
               autonomous agents with real workflows.
             </p>
             <p>
-              As the founder of <strong className="text-foreground">ShackleAI</strong>, I designed and built an
+              As the creator of <strong className="text-foreground">ShackleAI</strong>, I designed and built an
               11-microservice agent platform from scratch: an LLM gateway with
               multi-provider routing and PII scrubbing, a credential vault with
               AES-256 encryption and auto-rotation, RBAC+ABAC governance with

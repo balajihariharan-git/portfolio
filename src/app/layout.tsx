@@ -19,14 +19,14 @@ export const metadata: Metadata = {
     template: "%s | Balaji Hariharan",
   },
   description:
-    "AI Solutions Architect, LLM Infrastructure Engineer, and Founder of ShackleAI. I design and build production multi-agent systems, LLM gateways, and governance frameworks. Available for enterprise consulting, freelance AI projects, and technical training.",
+    "AI Solutions Architect, LLM Infrastructure Engineer, and Creator of ShackleAI. I design and build production multi-agent systems, LLM gateways, and governance frameworks. Available for enterprise consulting, freelance AI projects, and technical training.",
   metadataBase: new URL("https://balajihariharan.com"),
   openGraph: {
     type: "website",
     siteName: "Balaji Hariharan",
     title: "Balaji Hariharan — AI Solutions Architect",
     description:
-      "AI Solutions Architect building production multi-agent systems. Founder of ShackleAI. Open-source MCP tools with 1,784+ downloads. Hire for AI consulting, freelance projects, or full-time roles.",
+      "AI Solutions Architect building production multi-agent systems. Creator of ShackleAI. Open-source MCP tools with 1,784+ downloads. Hire for AI consulting, freelance projects, or full-time roles.",
     url: "https://balajihariharan.com",
     locale: "en_US",
   },

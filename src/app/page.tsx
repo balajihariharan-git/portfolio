@@ -3,7 +3,7 @@ import { About } from "@/components/sections/about";
 import { Background } from "@/components/sections/background";
 import { Projects } from "@/components/sections/projects";
 import { Skills } from "@/components/sections/skills";
-import { WorkWithMe } from "@/components/sections/work-with-me";
+// import { WorkWithMe } from "@/components/sections/work-with-me";
 import { LatestPosts } from "@/components/sections/latest-posts";
 import { OpenSource } from "@/components/sections/open-source";
 import { Timeline } from "@/components/sections/timeline";
@@ -19,7 +19,7 @@ export default function Home() {
       <Background />
       <Projects />
       <Skills />
-      <WorkWithMe />
+      {/* <WorkWithMe /> */}
       <LatestPosts />
       <OpenSource />
       <Timeline />

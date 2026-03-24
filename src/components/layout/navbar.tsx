@@ -66,7 +66,7 @@ export function Navbar() {
               </a>
             </li>
           ))}
-          {/* Work With Me — soft CTA highlight */}
+          {/* Work With Me — hidden for now
           <li>
             <a
               href="/#work-with-me"
@@ -81,6 +81,7 @@ export function Navbar() {
               <ArrowRight className={cn("h-3.5 w-3.5 transition-transform", scrolled && "translate-x-0.5")} />
             </a>
           </li>
+          */}
         </ul>
 
         <div className="flex items-center gap-3">
@@ -133,7 +134,7 @@ export function Navbar() {
                 </a>
               </li>
             ))}
-            {/* Work With Me — mobile CTA */}
+            {/* Work With Me — hidden for now
             <li className="mt-2">
               <a
                 href="/#work-with-me"
@@ -144,6 +145,7 @@ export function Navbar() {
                 <ArrowRight className="h-4 w-4" />
               </a>
             </li>
+            */}
           </ul>
         </div>
       )}

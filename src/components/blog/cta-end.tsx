@@ -32,10 +32,10 @@ export function CtaEnd({ category }: CtaEndProps) {
       <p className="mb-6 text-muted-foreground">{cta.description}</p>
       <div className="flex flex-col gap-3 sm:flex-row">
         <a
-          href="/#work-with-me"
+          href="/#contact"
           className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
         >
-          Work With Me
+          Get In Touch
           <ArrowRight className="h-4 w-4" />
         </a>
         <a
