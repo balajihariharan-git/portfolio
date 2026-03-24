@@ -13,6 +13,7 @@ interface Stats {
   apiRoutes: number;
   agentCount: number;
   services: number;
+  issuesClosed: number;
   updatedAt: string;
 }
 
@@ -88,11 +89,11 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
           <div className="mb-10 grid grid-cols-3 gap-3 sm:grid-cols-6">
             {[
               { value: stats.commits.total.toLocaleString() + "+", label: "Commits" },
-              { value: fmt(stats.npm.weeklyDownloads), label: "npm / week" },
+              { value: fmt(stats.npm.totalDownloads), label: "npm Downloads" },
               { value: "97%", label: "Coverage" },
               { value: stats.linesOfCode.toLocaleString() + "+", label: "Lines of Code" },
               { value: String(stats.prs.merged), label: "PRs Merged" },
-              { value: "539+", label: "Issues Closed" },
+              { value: String(stats.issuesClosed) + "+", label: "Issues Closed" },
             ].map((m) => (
               <div key={m.label} className="rounded-xl border border-border bg-card p-3 text-center">
                 <div className="text-lg font-bold text-primary sm:text-xl">{m.value}</div>
@@ -104,7 +105,7 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
           {/* SUMMARY */}
           <Section title="Summary">
             <p className="text-base leading-relaxed text-muted-foreground">
-              AI Solutions Architect and LLM Engineer with <strong className="text-foreground">18+ years</strong> of enterprise experience spanning RPA, automation, and AI agent infrastructure. Currently building <strong className="text-foreground">ShackleAI</strong> — an Operating System for AI Agents with {stats.services} microservices, multi-agent orchestration, and enterprise governance. Published open-source MCP server with <strong className="text-foreground">{fmt(stats.npm.weeklyDownloads)} weekly npm downloads</strong>. Former <strong className="text-foreground">Managing Director, APAC at Softomotive</strong> (acquired by Microsoft → Power Automate). Delivered enterprise solutions for <strong className="text-foreground">Microsoft, Walmart, Flipkart, Deloitte, Axis Bank, Sanofi, Capgemini</strong>. Deep expertise in LLM pipelines, RAG, vector search, multi-provider routing, agent orchestration, and production AI infrastructure.
+              AI Solutions Architect and LLM Engineer with <strong className="text-foreground">18+ years</strong> of enterprise experience spanning RPA, automation, and AI agent infrastructure. Currently building <strong className="text-foreground">ShackleAI</strong> — an Operating System for AI Agents with {stats.services} microservices, multi-agent orchestration, and enterprise governance. Published open-source MCP server with <strong className="text-foreground">{fmt(stats.npm.totalDownloads)} total npm downloads</strong>. Former <strong className="text-foreground">Managing Director, APAC at Softomotive</strong> (acquired by Microsoft → Power Automate). Delivered enterprise solutions for <strong className="text-foreground">Microsoft, Walmart, Flipkart, Deloitte, Axis Bank, Sanofi, Capgemini</strong>. Deep expertise in LLM pipelines, RAG, vector search, multi-provider routing, agent orchestration, and production AI infrastructure.
             </p>
           </Section>
 
@@ -145,8 +146,8 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
                   "Built multi-engine agent orchestration (CrewAI + OpenClaw) with LLM-driven plan decomposition into sequential/parallel execution steps",
                   "Designed LLM Gateway with multi-provider routing (OpenAI, Anthropic, Azure, Bedrock), budget enforcement, PII scrubbing, per-call cost tracking",
                   "Implemented Vault for AES-256 encrypted credential storage with runtime injection into sandboxed agent containers",
-                  <>Shipped <strong>{stats.apiRoutes} API routes</strong>, <strong>59 migrations</strong>, <strong>539+ issues closed</strong>, <strong>241+ PRs merged</strong>, <strong>213+ unit tests</strong></>,
-                  <>Engineered AI-accelerated dev methodology: <strong>{stats.agentCount}-agent ecosystem</strong> achieving 18 iterations in 3 days, 675+ commits across the platform</>,
+                  <>Shipped <strong>{stats.apiRoutes} API routes</strong>, <strong>59 migrations</strong>, <strong>{stats.issuesClosed}+ issues closed</strong>, <strong>{stats.prs.merged}+ PRs merged</strong>, <strong>213+ unit tests</strong></>,
+                  <>Engineered AI-accelerated dev methodology: <strong>{stats.agentCount}-agent ecosystem</strong> achieving 18 iterations in 3 days, {stats.commits.total.toLocaleString()}+ commits across 7 repositories</>,
                 ]}
               />
               <ProjectCard
@@ -157,7 +158,7 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
                 tech="TypeScript · MCP Protocol · SQLite + sqlite-vec · Transformers.js · Semantic Search · Vitest"
                 bullets={[
                   "Built the first MCP-native persistent memory server for AI coding assistants (Claude, Cursor, Windsurf, Copilot)",
-                  <>Achieved <strong>{fmt(stats.npm.weeklyDownloads)} weekly npm downloads</strong> with 11 MCP tools, zero-config setup, and fully offline embeddings</>,
+                  <>Achieved <strong>{fmt(stats.npm.totalDownloads)} total npm downloads</strong> with 11 MCP tools, zero-config setup, and fully offline embeddings</>,
                   "Semantic search via MiniLM-L6-v2 (384-dim) with sqlite-vec; project-scoped memory, TODO tracking, export/import, cloud sync",
                 ]}
               />
@@ -168,7 +169,7 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
                 links={[{ label: "npm", href: "https://npmjs.com/package/@shackleai/orchestrator" }, { label: "GitHub", href: "https://github.com/shackleai/orchestrator" }]}
                 tech="TypeScript · MCP Protocol · PostgreSQL · Docker · npm Monorepo"
                 bullets={[
-                  "Open-source multi-agent orchestrator with MCP-native tool infrastructure, 46 PRs merged across 3 milestones",
+                  "Open-source multi-agent orchestrator with MCP-native tool infrastructure, 112 PRs merged across 3 milestones",
                   "Multi-package monorepo (@shackleai/orchestrator, @shackleai/core, @shackleai/db, @shackleai/shared)",
                 ]}
               />
@@ -178,7 +179,7 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
                 role="Architect & Lead Developer"
                 tech="TypeScript · Java · Spring Boot · Next.js · PostgreSQL · Python · Docker"
                 bullets={[
-                  "Open-source reference platform for banking with ML credit scoring, fraud detection, document AI — 253 commits, 106 issues closed",
+                  "Open-source reference platform for banking with ML credit scoring, fraud detection, document AI — 253 commits, 53 PRs merged, 106 issues closed",
                   "8 specialized FinTech AI agents (Architect, Backend, Security, Data, Frontend, Docs, DevOps, QA)",
                 ]}
               />
@@ -209,7 +210,7 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
                 links={[{ label: "errakaaram.com", href: "https://errakaaram.com" }]}
                 tech="Next.js 15 · Express 5 · MongoDB · Redis · AWS · Razorpay · Docker"
                 bullets={[
-                  <>Live e-commerce: <strong>29 data models</strong>, <strong>124+ pages</strong>, <strong>563 commits</strong>. Multi-role system, Razorpay payments, AWS S3 + CloudFront CDN</>,
+                  <>Live e-commerce: <strong>29 data models</strong>, <strong>124+ pages</strong>, <strong>563 commits</strong> across 2 repos. Multi-role system, Razorpay payments, AWS S3 + CloudFront CDN</>,
                 ]}
               />
             </div>
@@ -267,7 +268,7 @@ export function ResumeClient({ stats: initialStats }: { stats: Stats }) {
                 Persistent memory for AI coding tools (Claude, Cursor, Windsurf, Copilot)
               </p>
               <div className="mt-3 flex flex-wrap gap-2 text-xs">
-                <span className="rounded-full bg-card border border-border px-3 py-1 font-semibold text-foreground">{fmt(stats.npm.weeklyDownloads)} weekly downloads</span>
+                <span className="rounded-full bg-card border border-border px-3 py-1 font-semibold text-foreground">{fmt(stats.npm.totalDownloads)} total downloads</span>
                 <span className="rounded-full bg-card border border-border px-3 py-1">11 MCP tools</span>
                 <span className="rounded-full bg-card border border-border px-3 py-1">Semantic search</span>
                 <span className="rounded-full bg-card border border-border px-3 py-1">Zero-config</span>

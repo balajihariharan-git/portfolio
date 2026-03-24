@@ -12,24 +12,26 @@ export const revalidate = 3600;
 interface Stats {
   commits: { total: number };
   prs: { merged: number };
-  npm: { weeklyDownloads: number; version: string };
+  npm: { weeklyDownloads: number; totalDownloads: number; version: string };
   linesOfCode: number;
   testCount: number;
   apiRoutes: number;
   agentCount: number;
   services: number;
+  issuesClosed: number;
 }
 
 async function getStats(): Promise<Stats> {
   const fallback: Stats = {
-    commits: { total: 1100 },
-    prs: { merged: 241 },
-    npm: { weeklyDownloads: 1784, version: "0.5.2" },
+    commits: { total: 1359 },
+    prs: { merged: 312 },
+    npm: { weeklyDownloads: 69, totalDownloads: 1853, version: "0.5.2" },
     linesOfCode: 83153,
     testCount: 7852,
     apiRoutes: 142,
     agentCount: 25,
     services: 11,
+    issuesClosed: 659,
   };
 
   try {
@@ -159,7 +161,7 @@ export async function GET() {
   <div class="section">
     <div class="section-title">Summary</div>
     <div class="summary">
-      AI Solutions Architect and LLM Engineer with <strong>18+ years</strong> of enterprise experience spanning RPA, automation, and AI agent infrastructure. Currently building <strong>ShackleAI</strong> &mdash; an Operating System for AI Agents with ${s.services} microservices, multi-agent orchestration, and enterprise governance. Published open-source MCP server with <strong>${fmt(s.npm.weeklyDownloads)} weekly npm downloads</strong>. Former <strong>Managing Director, APAC at Softomotive</strong> (acquired by Microsoft &rarr; Power Automate). Delivered enterprise solutions for <strong>Microsoft, Walmart, Flipkart, Deloitte, Axis Bank, Sanofi, Capgemini</strong>. Deep expertise in LLM pipelines, RAG, vector search, multi-provider routing, agent orchestration, and production AI infrastructure.
+      AI Solutions Architect and LLM Engineer with <strong>18+ years</strong> of enterprise experience spanning RPA, automation, and AI agent infrastructure. Currently building <strong>ShackleAI</strong> &mdash; an Operating System for AI Agents with ${s.services} microservices, multi-agent orchestration, and enterprise governance. Published open-source MCP server with <strong>${fmt(s.npm.totalDownloads)} total npm downloads</strong>. Former <strong>Managing Director, APAC at Softomotive</strong> (acquired by Microsoft &rarr; Power Automate). Delivered enterprise solutions for <strong>Microsoft, Walmart, Flipkart, Deloitte, Axis Bank, Sanofi, Capgemini</strong>. Deep expertise in LLM pipelines, RAG, vector search, multi-provider routing, agent orchestration, and production AI infrastructure.
     </div>
   </div>
 
@@ -190,8 +192,8 @@ export async function GET() {
         <li>Built multi-engine agent orchestration (CrewAI + OpenClaw) with LLM-driven plan decomposition into sequential/parallel execution steps</li>
         <li>Designed LLM Gateway with multi-provider routing (OpenAI, Anthropic, Azure, Bedrock), budget enforcement, PII scrubbing, per-call cost tracking</li>
         <li>Implemented Vault for AES-256 encrypted credential storage with runtime injection into sandboxed agent containers</li>
-        <li>Shipped <span class="metric">${s.apiRoutes} API routes</span>, <span class="metric">59 migrations</span>, <span class="metric">539+ issues closed</span>, <span class="metric">241+ PRs merged</span>, <span class="metric">213+ unit tests</span></li>
-        <li>Engineered AI-accelerated dev methodology: <span class="metric">${s.agentCount}-agent ecosystem</span> achieving 18 iterations in 3 days, 252 commits in 11 days</li>
+        <li>Shipped <span class="metric">${s.apiRoutes} API routes</span>, <span class="metric">59 migrations</span>, <span class="metric">${s.issuesClosed}+ issues closed</span>, <span class="metric">${s.prs.merged}+ PRs merged</span>, <span class="metric">213+ unit tests</span></li>
+        <li>Engineered AI-accelerated dev methodology: <span class="metric">${s.agentCount}-agent ecosystem</span> achieving 18 iterations in 3 days, ${s.commits.total.toLocaleString()}+ commits across 7 repositories</li>
       </ul>
     </div>
     <div class="project">
@@ -200,7 +202,7 @@ export async function GET() {
       <div class="project-tech">TypeScript &middot; MCP Protocol &middot; SQLite + sqlite-vec &middot; Transformers.js &middot; Semantic Search &middot; Vitest</div>
       <ul>
         <li>Built the first MCP-native persistent memory server for AI coding assistants (Claude, Cursor, Windsurf, Copilot)</li>
-        <li>Achieved <span class="metric">${fmt(s.npm.weeklyDownloads)} weekly npm downloads</span> with 11 MCP tools, zero-config setup, and fully offline embeddings</li>
+        <li>Achieved <span class="metric">${fmt(s.npm.totalDownloads)} total npm downloads</span> with 11 MCP tools, zero-config setup, and fully offline embeddings</li>
         <li>Semantic search via MiniLM-L6-v2 (384-dim) with sqlite-vec; project-scoped memory, TODO tracking, export/import, cloud sync</li>
       </ul>
     </div>
@@ -209,7 +211,7 @@ export async function GET() {
       <div class="project-subtitle">Creator &amp; Lead Developer &nbsp;|&nbsp; Published on npm (MIT) &nbsp;|&nbsp; github.com/shackleai/orchestrator</div>
       <div class="project-tech">TypeScript &middot; MCP Protocol &middot; PostgreSQL &middot; Docker &middot; npm Monorepo</div>
       <ul>
-        <li>Open-source multi-agent orchestrator with MCP-native tool infrastructure, 46 PRs merged across 3 milestones</li>
+        <li>Open-source multi-agent orchestrator with MCP-native tool infrastructure, 112 PRs merged across 3 milestones</li>
         <li>Multi-package monorepo (@shackleai/orchestrator, @shackleai/core, @shackleai/db, @shackleai/shared)</li>
       </ul>
     </div>
@@ -218,7 +220,7 @@ export async function GET() {
       <div class="project-subtitle">Architect &amp; Lead Developer</div>
       <div class="project-tech">TypeScript &middot; Java &middot; Spring Boot &middot; Next.js &middot; PostgreSQL &middot; Python &middot; Docker</div>
       <ul>
-        <li>Open-source reference platform for banking with ML credit scoring, fraud detection, document AI &mdash; 253 commits, 106 issues closed</li>
+        <li>Open-source reference platform for banking with ML credit scoring, fraud detection, document AI &mdash; 253 commits, 53 PRs merged, 106 issues closed</li>
         <li>8 specialized FinTech AI agents (Architect, Backend, Security, Data, Frontend, Docs, DevOps, QA)</li>
       </ul>
     </div>
@@ -239,7 +241,7 @@ export async function GET() {
     <div class="project">
       <div class="project-header"><span class="project-name">Errakaaram &mdash; Production E-Commerce Platform</span><span class="project-meta">2024 &ndash; Present</span></div>
       <div class="project-tech">Next.js 15 &middot; Express 5 &middot; MongoDB &middot; Redis &middot; AWS &middot; Razorpay &middot; Docker</div>
-      <ul><li>Live e-commerce: <span class="metric">29 data models</span>, <span class="metric">124+ pages</span>, <span class="metric">563 commits</span>. Multi-role system, Razorpay payments, AWS S3 + CloudFront CDN</li></ul>
+      <ul><li>Live e-commerce: <span class="metric">29 data models</span>, <span class="metric">124+ pages</span>, <span class="metric">563 commits</span> across 2 repos. Multi-role system, Razorpay payments, AWS S3 + CloudFront CDN</li></ul>
     </div>
   </div>
 </div>
@@ -262,7 +264,7 @@ export async function GET() {
 
   <div class="section">
     <div class="section-title">Open Source</div>
-    <div class="oss-highlight"><span class="oss-name">@shackleai/memory-mcp</span> <span class="oss-desc">&mdash; Persistent memory for AI coding tools (Claude, Cursor, Windsurf, Copilot)</span><div class="oss-stats">npm &nbsp;|&nbsp; MIT License &nbsp;|&nbsp; <span class="metric">${fmt(s.npm.weeklyDownloads)} weekly downloads</span> &nbsp;|&nbsp; 11 MCP tools &nbsp;|&nbsp; v${s.npm.version} &nbsp;|&nbsp; Semantic search &nbsp;|&nbsp; Zero-config</div></div>
+    <div class="oss-highlight"><span class="oss-name">@shackleai/memory-mcp</span> <span class="oss-desc">&mdash; Persistent memory for AI coding tools (Claude, Cursor, Windsurf, Copilot)</span><div class="oss-stats">npm &nbsp;|&nbsp; MIT License &nbsp;|&nbsp; <span class="metric">${fmt(s.npm.totalDownloads)} total downloads</span> &nbsp;|&nbsp; 11 MCP tools &nbsp;|&nbsp; v${s.npm.version} &nbsp;|&nbsp; Semantic search &nbsp;|&nbsp; Zero-config</div></div>
   </div>
 
   <div class="section">
@@ -286,11 +288,11 @@ export async function GET() {
     <div class="section-title">Key Metrics (Live &amp; Verifiable)</div>
     <div class="metrics-bar">
       <div class="m-card"><div class="m-num">${s.commits.total.toLocaleString()}+</div><div class="m-label">Git Commits</div></div>
-      <div class="m-card"><div class="m-num">${s.npm.weeklyDownloads.toLocaleString()}+</div><div class="m-label">Weekly npm Downloads</div></div>
+      <div class="m-card"><div class="m-num">${s.npm.totalDownloads.toLocaleString()}+</div><div class="m-label">npm Downloads</div></div>
       <div class="m-card"><div class="m-num">97%</div><div class="m-label">Test Coverage</div></div>
       <div class="m-card"><div class="m-num">${s.linesOfCode.toLocaleString()}+</div><div class="m-label">Lines of Code</div></div>
       <div class="m-card"><div class="m-num">${s.prs.merged}</div><div class="m-label">PRs Merged</div></div>
-      <div class="m-card"><div class="m-num">539+</div><div class="m-label">Issues Closed</div></div>
+      <div class="m-card"><div class="m-num">${s.issuesClosed}+</div><div class="m-label">Issues Closed</div></div>
     </div>
   </div>
 </div>

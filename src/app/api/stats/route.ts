@@ -75,19 +75,31 @@ async function getNpmStats(pkg: string) {
 }
 
 export async function GET() {
-  // Fetch all data in parallel
+  // Fetch all repo data in parallel
   const [
     platformCommits,
+    orchestratorCommits,
     memoryMcpCommits,
+    lendingCommits,
     portfolioCommits,
-    mergedPRs,
+    platformPRs,
+    orchestratorPRs,
+    memoryMcpPRs,
+    lendingPRs,
+    portfolioPRs,
     npmStats,
     platformRepo,
   ] = await Promise.all([
     getRepoCommits("shackleai", "platform"),
+    getRepoCommits("shackleai", "orchestrator"),
     getRepoCommits("shackleai", "memory-mcp"),
+    getRepoCommits("shackleai", "lending-platform"),
     getRepoCommits("balajihariharan-git", "portfolio"),
     getMergedPRCount("shackleai", "platform"),
+    getMergedPRCount("shackleai", "orchestrator"),
+    getMergedPRCount("shackleai", "memory-mcp"),
+    getMergedPRCount("shackleai", "lending-platform"),
+    getMergedPRCount("balajihariharan-git", "portfolio"),
     getNpmStats("@shackleai/memory-mcp"),
     fetchJson<{ open_issues_count: number; stargazers_count: number }>(
       "https://api.github.com/repos/shackleai/platform",
@@ -95,18 +107,35 @@ export async function GET() {
     ),
   ]);
 
-  // Static fallbacks for private repo data (updated each deploy)
-  const PLATFORM_FALLBACK = { commits: 675, prs: 241, issues: 539 };
+  // Static fallbacks (updated 2026-03-24)
+  const FALLBACK = {
+    platform: { commits: 252, prs: 142 },
+    orchestrator: { commits: 214, prs: 112 },
+    memoryMcp: { commits: 31, prs: 1 },
+    lending: { commits: 253, prs: 53 },
+    portfolio: { commits: 46, prs: 4 },
+    errakaaram: { commits: 563 },  // ekbx 180 + ekfx 383 (private, local-only count)
+    issuesClosed: 659,
+  };
 
   const repos: RepoCommitInfo[] = [
-    { repo: "shackleai/platform", commits: platformCommits || PLATFORM_FALLBACK.commits },
-    { repo: "shackleai/memory-mcp", commits: memoryMcpCommits || 31 },
-    { repo: "balajihariharan-git/portfolio", commits: portfolioCommits || 30 },
+    { repo: "shackleai/platform", commits: platformCommits || FALLBACK.platform.commits },
+    { repo: "shackleai/orchestrator", commits: orchestratorCommits || FALLBACK.orchestrator.commits },
+    { repo: "shackleai/memory-mcp", commits: memoryMcpCommits || FALLBACK.memoryMcp.commits },
+    { repo: "shackleai/lending-platform", commits: lendingCommits || FALLBACK.lending.commits },
+    { repo: "balajihariharan-git/portfolio", commits: portfolioCommits || FALLBACK.portfolio.commits },
+    { repo: "errakaaram/ekbx+ekfx", commits: FALLBACK.errakaaram.commits },  // private repos, static count
   ];
 
   const totalCommits = repos.reduce((sum, r) => sum + r.commits, 0);
 
-  // Static counts (updated via deploy pipeline, verified from filesystem)
+  const totalPRs = (platformPRs || FALLBACK.platform.prs)
+    + (orchestratorPRs || FALLBACK.orchestrator.prs)
+    + (memoryMcpPRs || FALLBACK.memoryMcp.prs)
+    + (lendingPRs || FALLBACK.lending.prs)
+    + (portfolioPRs || FALLBACK.portfolio.prs);
+
+  // Static counts (updated 2026-03-24)
   const staticStats = {
     linesOfCode: 83153,        // TypeScript LOC across all projects
     testCount: 7852,           // it()/test() calls across all projects
@@ -114,6 +143,7 @@ export async function GET() {
     apiRoutes: 142,            // route.ts files in platform src/
     agentCount: 25,            // AI agent ecosystem (17 platform + 8 fintech)
     services: 11,              // ShackleAI platform services
+    issuesClosed: FALLBACK.issuesClosed,
   };
 
   const stats = {
@@ -122,14 +152,14 @@ export async function GET() {
       repos,
     },
     prs: {
-      merged: mergedPRs || PLATFORM_FALLBACK.prs,
+      merged: totalPRs,
     },
     npm: {
       package: "@shackleai/memory-mcp",
       ...npmStats,
     },
     github: {
-      openIssues: platformRepo?.open_issues_count ?? PLATFORM_FALLBACK.issues,
+      openIssues: platformRepo?.open_issues_count ?? 64,
       stars: platformRepo?.stargazers_count ?? 0,
     },
     ...staticStats,

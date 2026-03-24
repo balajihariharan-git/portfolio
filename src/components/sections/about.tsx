@@ -11,18 +11,18 @@ interface StatItem {
 }
 
 const FALLBACK_STATS: StatItem[] = [
-  { value: 675, label: "Commits Shipped", suffix: "+" },
+  { value: 1359, label: "Commits Shipped", suffix: "+" },
   { value: 7852, label: "Tests Passing", suffix: "+" },
   { value: 97, label: "Test Coverage", suffix: "%" },
-  { value: 1784, label: "npm Downloads", suffix: "+" },
-  { value: 241, label: "PRs Merged" },
+  { value: 1853, label: "npm Downloads", suffix: "+" },
+  { value: 312, label: "PRs Merged" },
   { value: 83153, label: "Lines of Code", suffix: "+" },
 ];
 
 function buildStats(data: Record<string, unknown>): StatItem[] {
-  const commits = (data.commits as { total: number })?.total ?? 675;
+  const commits = (data.commits as { total: number })?.total ?? 1359;
   const testCount = (data.testCount as number) ?? 7852;
-  const prs = (data.prs as { merged: number })?.merged ?? 241;
+  const prs = (data.prs as { merged: number })?.merged ?? 312;
   const npm = data.npm as { totalDownloads: number } | undefined;
   const loc = (data.linesOfCode as number) ?? 83153;
   const agentCount = (data.agentCount as number) ?? 25;
@@ -31,7 +31,7 @@ function buildStats(data: Record<string, unknown>): StatItem[] {
     { value: commits, label: "Commits Shipped", suffix: "+" },
     { value: testCount, label: "Tests Passing", suffix: "+" },
     { value: 97, label: "Test Coverage", suffix: "%" },
-    { value: npm?.totalDownloads ?? 1784, label: "npm Downloads", suffix: "+" },
+    { value: npm?.totalDownloads ?? 1853, label: "npm Downloads", suffix: "+" },
     { value: prs, label: "PRs Merged" },
     { value: loc, label: "Lines of Code", suffix: "+" },
   ];
@@ -80,7 +80,7 @@ export function About() {
             </p>
             <p>
               My open-source contributions include an{" "}
-              <strong className="text-foreground">MCP memory server</strong> (1,784+ npm downloads)
+              <strong className="text-foreground">MCP memory server</strong> (1,853+ npm downloads)
               and a <strong className="text-foreground">Python async agent framework</strong> on PyPI with
               2,000+ tests at 97% coverage, per-call cost tracking across 100+ LLM
               providers, and 37 built-in tools.
@@ -89,8 +89,8 @@ export function About() {
               I developed a <strong className="text-foreground">rapid AI-accelerated development
               methodology</strong> — automated GitHub issue management, AI-driven sprint
               execution, and a 25-agent AI ecosystem that ships production
-              code at lightning speed: 18 iterations in 3 days, 675+ commits across
-              5 repositories, 7 PyPI releases. This isn&apos;t just
+              code at lightning speed: 18 iterations in 3 days, 1,359+ commits across
+              7 repositories, 7 PyPI releases. This isn&apos;t just
               building AI — it&apos;s using AI to build AI, faster than any traditional team.
             </p>
           </div>

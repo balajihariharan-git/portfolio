@@ -20,6 +20,7 @@ interface Stats {
   apiRoutes: number;
   agentCount: number;
   services: number;
+  issuesClosed: number;
   updatedAt: string;
 }
 
@@ -37,15 +38,16 @@ async function fetchStats(): Promise<Stats> {
   }
 
   return {
-    commits: { total: 750 },
-    prs: { merged: 241 },
-    npm: { weeklyDownloads: 129, totalDownloads: 1784, version: "0.5.2" },
-    github: { openIssues: 539, stars: 0 },
+    commits: { total: 1359 },
+    prs: { merged: 312 },
+    npm: { weeklyDownloads: 69, totalDownloads: 1853, version: "0.5.2" },
+    github: { openIssues: 64, stars: 0 },
     linesOfCode: 83153,
     testCount: 7852,
     apiRoutes: 142,
     agentCount: 25,
     services: 11,
+    issuesClosed: 659,
     updatedAt: new Date().toISOString(),
   };
 }
