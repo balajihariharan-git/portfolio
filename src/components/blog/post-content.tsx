@@ -1,15 +1,119 @@
+"use client";
+
+import ReactMarkdown from "react-markdown";
+import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
+
 interface PostContentProps {
   content: string;
 }
 
 export function PostContent({ content }: PostContentProps) {
-  // Simple markdown rendering — content is raw markdown from gray-matter
-  // For a production blog, you'd use MDX compilation, but this works for launch
   return (
-    <article className="mb-12 text-base leading-relaxed text-foreground [&>*]:mb-4 [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:tracking-tight [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:text-xl [&_h3]:font-semibold [&_p]:leading-relaxed [&_p]:text-muted-foreground [&_strong]:text-foreground [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary/80 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:text-muted-foreground [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:text-muted-foreground [&_li]:mb-2 [&_blockquote]:border-l-4 [&_blockquote]:border-primary/30 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-muted-foreground [&_code]:rounded [&_code]:bg-[var(--code-bg)] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-sm [&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:bg-[var(--code-bg)] [&_pre]:p-4 [&_pre]:font-mono [&_pre]:text-sm [&_img]:rounded-xl [&_img]:border [&_img]:border-border [&_hr]:border-border">
-      <div className="whitespace-pre-wrap">
+    <article className="prose-custom mb-12">
+      <ReactMarkdown
+        rehypePlugins={[rehypeSlug]}
+        remarkPlugins={[remarkGfm]}
+        components={{
+          h1: ({ children, ...props }) => (
+            <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-foreground scroll-mt-24" {...props}>
+              {children}
+            </h1>
+          ),
+          h2: ({ children, ...props }) => (
+            <h2 className="mt-10 mb-4 text-2xl font-bold tracking-tight text-foreground scroll-mt-24" {...props}>
+              {children}
+            </h2>
+          ),
+          h3: ({ children, ...props }) => (
+            <h3 className="mt-8 mb-3 text-xl font-semibold text-foreground scroll-mt-24" {...props}>
+              {children}
+            </h3>
+          ),
+          h4: ({ children, ...props }) => (
+            <h4 className="mt-6 mb-2 text-lg font-semibold text-foreground scroll-mt-24" {...props}>
+              {children}
+            </h4>
+          ),
+          p: ({ children }) => (
+            <p className="mb-4 text-base leading-relaxed text-muted-foreground">
+              {children}
+            </p>
+          ),
+          ul: ({ children }) => (
+            <ul className="mb-4 list-disc space-y-1 pl-6 text-muted-foreground">
+              {children}
+            </ul>
+          ),
+          ol: ({ children }) => (
+            <ol className="mb-4 list-decimal space-y-1 pl-6 text-muted-foreground">
+              {children}
+            </ol>
+          ),
+          li: ({ children }) => (
+            <li className="text-base leading-relaxed">{children}</li>
+          ),
+          a: ({ href, children }) => (
+            <a
+              href={href}
+              className="text-primary underline underline-offset-4 hover:text-primary/80"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {children}
+            </a>
+          ),
+          blockquote: ({ children }) => (
+            <blockquote className="my-4 border-l-4 border-primary/30 pl-4 italic text-muted-foreground">
+              {children}
+            </blockquote>
+          ),
+          code: ({ className, children }) => {
+            const isBlock = className?.includes("language-");
+            if (isBlock) {
+              return (
+                <code className="text-sm">{children}</code>
+              );
+            }
+            return (
+              <code className="rounded bg-[var(--code-bg)] px-1.5 py-0.5 font-mono text-sm text-[var(--code-text)]">
+                {children}
+              </code>
+            );
+          },
+          pre: ({ children }) => (
+            <pre className="mb-4 overflow-x-auto rounded-xl bg-[var(--code-bg)] p-4 font-mono text-sm text-[var(--code-text)]">
+              {children}
+            </pre>
+          ),
+          strong: ({ children }) => (
+            <strong className="font-semibold text-foreground">{children}</strong>
+          ),
+          hr: () => <hr className="my-8 border-border" />,
+          table: ({ children }) => (
+            <div className="mb-4 overflow-x-auto">
+              <table className="w-full border-collapse text-sm">
+                {children}
+              </table>
+            </div>
+          ),
+          thead: ({ children }) => (
+            <thead className="border-b-2 border-border">{children}</thead>
+          ),
+          th: ({ children }) => (
+            <th className="px-4 py-2 text-left font-semibold text-foreground">
+              {children}
+            </th>
+          ),
+          td: ({ children }) => (
+            <td className="border-b border-border px-4 py-2 text-muted-foreground">
+              {children}
+            </td>
+          ),
+        }}
+      >
         {content}
-      </div>
+      </ReactMarkdown>
     </article>
   );
 }
